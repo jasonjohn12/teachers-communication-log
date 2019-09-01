@@ -2,7 +2,9 @@ version: 0.2
 
 
  phases:
-  install:	
+  install:
+    runtime-versions:
+    	nodejs: 10
     commands:	
       - echo Running install phase	
     finally:	
