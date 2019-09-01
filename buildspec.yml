@@ -2,9 +2,9 @@ version: 0.2
 
 
  phases:
-  install:
-    runtime-versions:
+     runtime-versions:
     	nodejs: 10
+  install:
     commands:	
       - echo Running install phase	
     finally:	
@@ -14,9 +14,9 @@ version: 0.2
       - echo Running pre_build phase	
     finally:	
       - echo Executing pre_build phase finally	
-  build:	  build:
-    commands:	    commands:
-      - echo Running build phase	      - echo Running build phase
+  build:	
+    commands:	
+      - echo Running build phase	 
     finally:	
       - echo Executing build phase finally	
   post_build:	
@@ -24,6 +24,6 @@ version: 0.2
       - echo Running post_build phase	
     finally:	
       - echo Executing post_build phase	
-artifacts:	artifacts:
-  files:	  files:
+artifacts:
+  files:
     - '**/*' 
