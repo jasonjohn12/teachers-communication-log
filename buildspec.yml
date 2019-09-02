@@ -9,6 +9,7 @@ phases:
 
   pre_build:
     # run-as: root
+    -npm install
     commands:
       - echo "Pre build initiated"
     finally:
@@ -17,15 +18,14 @@ phases:
   build:
     # run-as: root
     commands:
-      - npm install
-      - npm audit fix
-      - npm run-script build
+      - npm run build
     # finally:
     #   - command
     #   - command
   post_build:
     commands:
       - echo "Running post deployment"
+      - aws s3 sync ./build $S3_BUCKET
     finally:
       - echo "Done"
     #   - command
