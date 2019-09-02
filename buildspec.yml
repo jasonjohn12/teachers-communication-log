@@ -1,16 +1,20 @@
+# Do not change version. This is the version of aws buildspec, not the version of your buldspec file.
 version: 0.2
 
 phases:
-  runtime-versions:
-    nodejs: 10
+  install:
+    runtime-versions:
+      nodejs: 10  
   pre_build:
     commands:
+      - echo Installing source NPM dependencies...
       - npm install
-
   build:
     commands:
-      - npm run build
-
+      - echo Build started on `date`
+      - echo Compiling the Node.js code
+      -npm run build
   post_build:
     commands:
+      - echo Build completed on `date`
       - aws s3 sync --delete build/ s3://react-application-teachers.com --acl public-read
