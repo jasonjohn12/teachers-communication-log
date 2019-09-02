@@ -20,7 +20,6 @@ phases:
       - npm install
       - npm audit fix
       - npm run-script build
-      - aws cloudfront create-invalidation --distribution-id "${DISTRIBUTION_ID}" --paths /index.html /* /fonts/* /images/* /javascripts/* /stylesheets/* /favicon.ico
     # finally:
     #   - command
     #   - command
