@@ -1,29 +1,69 @@
 version: 0.2
 
+# run-as: root
 
- phases:
-     runtime-versions:
-    	nodejs: 10
-  install:
-    commands:	
-      - echo Running install phase	
-    finally:	
-      - echo Executing install phase finally	
-  pre_build:	
-    commands:	
-      - echo Running pre_build phase	
-    finally:	
-      - echo Executing pre_build phase finally	
-  build:	
-    commands:	
-      - echo Running build phase	 
-    finally:	
-      - echo Executing build phase finally	
-  post_build:	
-    commands:	
-      - echo Running post_build phase	
-    finally:	
-      - echo Executing post_build phase	
-artifacts:
-  files:
-    - '**/*' 
+# env:
+#   variables:
+#     key: "value"
+#     key: "value"
+#   parameter-store:
+#     key: "value"
+#     key: "value"
+
+phases:
+  # install:
+  #   run-as: root
+  #   commands:
+  #     - command
+  #     - command
+  #   finally:
+  #     - command
+  #     - command
+  pre_build:
+    # run-as: root
+    commands:
+      - echo "Pre build initiated"
+    finally:
+      - echo "Pre build Done"
+    #   - command
+  build:
+    # run-as: root
+    commands:
+      - npm install
+      - npm audit fix
+      - npm run-script build
+      - aws s3 sync --delete build/. "s3://react-application-teachers" --acl public-read --cache-control max-age=31536000
+      - aws cloudfront create-invalidation --distribution-id "${DISTRIBUTION_ID}" --paths /index.html /* /fonts/* /images/* /javascripts/* /stylesheets/* /favicon.ico
+    # finally:
+    #   - command
+    #   - command
+  post_build:
+    commands:
+      - echo "Running post deployment"
+    finally:
+      - echo "Done"
+    #   - command
+# artifacts:
+#   files:
+#     - location
+#     - location
+#     - name
+#   discard-paths: yes
+#   base-directory: location
+#   secondary-artifacts:
+#     artifactIdentifier:
+#       files:
+#         - location
+#         - location
+#       discard-paths: yes
+#       base-directory: location
+#     artifactIdentifier:
+#       files:
+#         - location
+#         - location
+#       discard-paths: yes
+#       base-directory: location
+# cache:
+#   paths:
+#     - path
+#     - path
