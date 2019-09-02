@@ -9,7 +9,7 @@ phases:
 
   pre_build:
     # run-as: root
-    -npm install
+    - npm install
     commands:
       - echo "Pre build initiated"
     finally:
