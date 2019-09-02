@@ -17,4 +17,4 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-      - aws s3 sync --delete build/ s3://react-application-teachers.com --acl public-read
+      - aws s3 sync --delete build/ s3://react-application-teachers --acl public-read
