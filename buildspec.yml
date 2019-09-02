@@ -6,10 +6,9 @@ phases:
   install:
     runtime-versions:
       nodejs: 10
-
   pre_build:
     # run-as: root
-    - npm install
+      - npm install
     commands:
       - echo "Pre build initiated"
     finally:
