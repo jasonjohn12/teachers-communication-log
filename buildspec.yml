@@ -1,7 +1,7 @@
 version: 0.2
 
 phases:
-  runtime-version:
+  runtime-versions:
     nodejs: 10
   pre_build:
     commands:
