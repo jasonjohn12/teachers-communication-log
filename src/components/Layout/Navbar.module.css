@@ -1,5 +1,4 @@
-.navbar {
-  /* font-family: "Montserrat", sans-serif; */
+/* .navbar {
   display: flex;
   justify-content: space-between;
   color: white;
@@ -9,14 +8,14 @@
 .navbar div {
   font-size: 22px;
   margin: 0 32px;
-}
+} */
 
-.navbarLinks li {
+/* .navbarLinks li {
   display: flex;
   justify-content: space-between;
   list-style: none;
   margin: 0 8px;
   cursor: pointer;
-}
+} */
 /*#723881;*/
 /*e0e0e0*/

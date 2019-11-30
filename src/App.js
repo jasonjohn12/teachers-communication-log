@@ -1,13 +1,22 @@
 import React from "react";
-import Navbar from "./components/Layout/Navbar";
-import StudentEntry from "./components/StudentEntry/StudentEntry";
+import Navigation from "./components/Layout/Navbar";
+import Dashboard from "./components/Dashboard/Dashboard";
+import { Container, Col, Row } from "react-bootstrap";
 
 function App() {
   return (
-    <div>
-      <Navbar />
-      <StudentEntry />
-    </div>
+    <Container>
+      <Row>
+        <Col>
+          <Navigation />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Dashboard />
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
