@@ -19,6 +19,11 @@ phases:
   post_build:
     commands:
       - echo "Running post deployment"
+  artifacts:
+    files:
+      -"**/*"
+  discard-paths: no
+  base-directory: dist
     finally:
       - echo "Done"
     #   - command
