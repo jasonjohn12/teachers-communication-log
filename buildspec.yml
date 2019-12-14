@@ -19,11 +19,14 @@ phases:
   post_build:
     commands:
       - echo "Running post deployment"
+      /* eslint-disable */
   artifacts:
-    files: -"**/*"
+    files:
+       -"**/*"
   discard-paths: no
   base-directory:
     dist
+    /* eslint-disable */
     #   - command
 # artifacts:
 #   files:
