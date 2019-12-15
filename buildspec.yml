@@ -18,6 +18,8 @@ phases:
     # run-as: root
     commands:
       - npm run build
+    finally:
+      - echo Build Phase completed
   post_build:
     commands:
       - echo "Running post deployment"
