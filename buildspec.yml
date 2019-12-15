@@ -11,6 +11,8 @@ phases:
     commands:
       - npm install
       - echo "Pre build initiated"
+    finally:
+      - echo Pre Build Completed
     #   - command
   build:
     # run-as: root
