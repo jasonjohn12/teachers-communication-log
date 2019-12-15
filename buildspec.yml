@@ -4,7 +4,7 @@ phases:
     commands:
       - npm install
       - npm run build
-      - aws s3 sync dist s3://sunnyones.com --delete
+      - aws s3 sync build s3://sunnyones.com --delete
 # version: 0.2
 # # run-as: root
 
