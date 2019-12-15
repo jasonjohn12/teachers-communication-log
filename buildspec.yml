@@ -18,11 +18,7 @@ phases:
   post_build:
     commands:
       - echo "Running post deployment"
-  artifacts:
-    files: -"**/*"
-  discard-paths: no
-  base-directory:
-    dist
+      - aws s3 sync ./build s3://sunnyones.com
     #   - command
 # artifacts:
 #   files:
