@@ -1,25 +1,33 @@
-version: 0.2
-# run-as: root
-
+version: 0.1
 phases:
   install:
-    runtime-versions:
-      nodejs: 10
-  pre_build:
-    # run-as: root
     commands:
       - npm install
-      - echo "Pre build initiated"
-    #   - command
-  build:
-    # run-as: root
-    commands:
       - npm run build
-  post_build:
-    commands:
-      - echo "Running post deployment"
-      - aws s3 sync ./build s3://sunnyones.com
-    #   - command
+      - aws s3 sync dist s3://sunnyones.com --delete
+# version: 0.2
+# # run-as: root
+
+# phases:
+#   install:
+#     runtime-versions:
+#       nodejs: 10
+#   pre_build:
+#     # run-as: root
+#     commands:
+#       - npm install
+#       - echo "Pre build initiated"
+#     #   - command
+#   build:
+#     # run-as: root
+#     commands:
+#       - npm run build
+#   post_build:
+#     commands:
+#       - echo "Running post deployment"
+#       - aws s3 sync ./build s3://sunnyones.com
+
+#   - command
 # artifacts:
 #   files:
 #     - location
