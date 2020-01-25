@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navbar from "./components/Layout/Navbar";
+import Navigation from "./components/Layout/Navbar";
 import StudentInput from "./components/StudentInput";
 import StudentDashboard from "./components/StudentsDashboard";
 import uuid from "uuid/v4";
@@ -14,19 +14,16 @@ function App() {
     ]);
   };
   return (
-    <div className="container">
-      <div className="row">
-        <Navbar />
-        <div className="col-sm">
-          <br />
+      <div >
+        <Navigation />
+       <div>
           <StudentInput addStudent={addStudent} />
         </div>
-        <div className="col-sm">
-          <br />
-          <StudentDashboard students={studentsData} />
+        <div>
+          <StudentDashboard students={studentsData} /> 
         </div>
       </div>
-    </div>
+   
   );
 }
 

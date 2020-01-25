@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { Form, Button } from "react-bootstrap";
 const StudentInput = props => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -25,32 +25,20 @@ const StudentInput = props => {
   return (
     <div className="container">
       <h3>Student Input</h3>
-      <form onSubmit={handleForm}>
-        <div className="form-group col">
-          <label htmlFor="firstName">First Name</label>
-          <input
-            className="form-control"
-            id="ex1"
-            type="text"
-            value={firstName}
-            onChange={e => setFirstName(e.target.value)}
-          />
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            className="form-control"
-            id="ex2"
-            type="text"
-            value={lastName}
-            onChange={e => setLastName(e.target.value)}
-          />
-          <br />
-          <input
-            type="submit"
-            className="btn btn-outline-primary"
-            disabled={submit}
-          />
-        </div>
-      </form>
+      <Form>
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label>FirstName</Form.Label>
+          <Form.Control type="text" placeholder="First Name" />
+        </Form.Group>
+
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Last Name</Form.Label>
+          <Form.Control type="text" placeholder="Last Name" />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
     </div>
   );
 };
