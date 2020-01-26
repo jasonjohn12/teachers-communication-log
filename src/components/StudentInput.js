@@ -7,13 +7,13 @@ const StudentInput = props => {
   const [submit, setSubmit] = useState(true);
   const [notes, setNotes] = useState([""]);
 
-  const handleForm = e => {
+  const handleSubmit = e => {
     e.preventDefault();
     setFirstName("");
     setLastName("");
     setNotes([""]);
     setCreatedDate(Date(Date.now()));
-    props.addStudent(firstName, lastName, createdDate, notes);
+    props.addStudent(firstName.trim(), lastName.trim(), createdDate, notes);
   };
   useEffect(() => {
     if (firstName !== "" && lastName !== "") {
@@ -24,18 +24,29 @@ const StudentInput = props => {
   }, [firstName, lastName]);
   return (
     <div className="container">
-      <h3>Student Input</h3>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>FirstName</Form.Label>
-          <Form.Control type="text" placeholder="First Name" />
+          <Form.Control
+            type="text"
+            placeholder="First Name"
+            value={firstName}
+            onChange={e => setFirstName(e.target.value)}
+            required
+          />
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Last Name</Form.Label>
-          <Form.Control type="text" placeholder="Last Name" />
+          <Form.Control
+            type="text"
+            placeholder="Last Name"
+            value={lastName}
+            onChange={e => setLastName(e.target.value)}
+            required
+          />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" disabled={submit}>
           Submit
         </Button>
       </Form>
