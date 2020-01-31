@@ -11,20 +11,16 @@ const StudentDashboard = ({ students }) => {
       </Card.Header>
       <Accordion.Collapse eventKey={data.id}>
         <Card.Body>
-          <div>
-          Created At: {data.createdDate}
-            </div>
-            <div>
-          Notes: {data.notes}
-            </div>
-            </Card.Body>
+          <div>Created At: {data.createdDate}</div>
+          <div>Notes: {data.notes}</div>
+        </Card.Body>
       </Accordion.Collapse>
     </Card>
   ));
   return (
     <React.Fragment>
       <Accordion defaultActiveKey="0" className="container">
-  <label>Dashboard Count: {studentData.length}</label>
+        <label>Dashboard Count: {studentData.length}</label>
         {studentData}
       </Accordion>
     </React.Fragment>
