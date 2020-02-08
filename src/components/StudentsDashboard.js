@@ -20,7 +20,10 @@ const StudentDashboard = ({ students }) => {
   return (
     <React.Fragment>
       <Accordion defaultActiveKey="0" className="container">
-        <label>Dashboard Count: {studentData.length}</label>
+        <label>
+          Dashboard Count:{" "}
+          <span className="student-data-count">{studentData.length}</span>
+        </label>
         {studentData}
       </Accordion>
     </React.Fragment>

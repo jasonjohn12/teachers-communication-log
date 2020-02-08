@@ -25,7 +25,7 @@ const StudentInput = props => {
   return (
     <div className="container">
       <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formBasicEmail">
+        <Form.Group controlId="formFirstName">
           <Form.Label>FirstName</Form.Label>
           <Form.Control
             type="text"
@@ -36,7 +36,7 @@ const StudentInput = props => {
           />
         </Form.Group>
 
-        <Form.Group controlId="formBasicPassword">
+        <Form.Group controlId="formLastName">
           <Form.Label>Last Name</Form.Label>
           <Form.Control
             type="text"
@@ -46,7 +46,7 @@ const StudentInput = props => {
             required
           />
         </Form.Group>
-        <Button variant="primary" type="submit" disabled={submit}>
+        <Button variant="primary" type="submit" disabled={submit} id="submit-button">
           Submit
         </Button>
       </Form>
