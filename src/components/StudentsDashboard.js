@@ -1,42 +1,31 @@
 import React from "react";
+import { Accordion, Card, Button } from "react-bootstrap";
 
 const StudentDashboard = ({ students }) => {
-  console.log(students);
-
-  const studentData = students.map(std => (
-    <div className="card" key={std.id}>
-      <div className="card-header" id={`heading${std.id}`}>
-        <h5 className="mb-0">
-          <button
-            className="btn btn-link"
-            data-toggle="collapse"
-            data-target="#collapseOne"
-            aria-expanded="true"
-            aria-controls="collapseOne"
-          >
-            {std.firstName} {std.lastName}
-          </button>
-        </h5>
-      </div>
-
-      <div
-        id={`heading${std.id}`}
-        className="collapse show"
-        aria-labelledby={`heading${std.id}`}
-        data-parent="#accordion"
-      >
-        <div className="card-body">
-          <div>Contacted: {std.isContacted ? "True" : "False"}</div>
-          <div>Notes: {std.notes}</div>
-          <div>Created At: {std.createdDate.toString()}</div>
-        </div>
-      </div>
-    </div>
+  const studentData = students.map(data => (
+    <Card key={data.id}>
+      <Card.Header>
+        <Accordion.Toggle as={Button} variant="link" eventKey={data.id}>
+          {data.firstName} {data.lastName}
+        </Accordion.Toggle>
+      </Card.Header>
+      <Accordion.Collapse eventKey={data.id}>
+        <Card.Body>
+          <div>Created At: {data.createdDate}</div>
+          <div>Notes: {data.notes}</div>
+        </Card.Body>
+      </Accordion.Collapse>
+    </Card>
   ));
   return (
     <React.Fragment>
-      <h3>Dashboard</h3>
-      <div id="accordion">{studentData}</div>
+      <Accordion defaultActiveKey="0" className="container">
+        <label>
+          Dashboard Count:{" "}
+          <span className="student-data-count">{studentData.length}</span>
+        </label>
+        {studentData}
+      </Accordion>
     </React.Fragment>
   );
 };

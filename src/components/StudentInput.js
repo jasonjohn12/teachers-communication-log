@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { Form, Button } from "react-bootstrap";
 const StudentInput = props => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -7,13 +7,13 @@ const StudentInput = props => {
   const [submit, setSubmit] = useState(true);
   const [notes, setNotes] = useState([""]);
 
-  const handleForm = e => {
+  const handleSubmit = e => {
     e.preventDefault();
     setFirstName("");
     setLastName("");
     setNotes([""]);
     setCreatedDate(Date(Date.now()));
-    props.addStudent(firstName, lastName, createdDate, notes);
+    props.addStudent(firstName.trim(), lastName.trim(), createdDate, notes);
   };
   useEffect(() => {
     if (firstName !== "" && lastName !== "") {
@@ -24,33 +24,32 @@ const StudentInput = props => {
   }, [firstName, lastName]);
   return (
     <div className="container">
-      <h3>Student Input</h3>
-      <form onSubmit={handleForm}>
-        <div className="form-group col">
-          <label htmlFor="firstName">First Name</label>
-          <input
-            className="form-control"
-            id="ex1"
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formFirstName">
+          <Form.Label>FirstName</Form.Label>
+          <Form.Control
             type="text"
+            placeholder="First Name"
             value={firstName}
             onChange={e => setFirstName(e.target.value)}
+            required
           />
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            className="form-control"
-            id="ex2"
+        </Form.Group>
+
+        <Form.Group controlId="formLastName">
+          <Form.Label>Last Name</Form.Label>
+          <Form.Control
             type="text"
+            placeholder="Last Name"
             value={lastName}
             onChange={e => setLastName(e.target.value)}
+            required
           />
-          <br />
-          <input
-            type="submit"
-            className="btn btn-outline-primary"
-            disabled={submit}
-          />
-        </div>
-      </form>
+        </Form.Group>
+        <Button variant="primary" type="submit" disabled={submit} id="submit-button">
+          Submit
+        </Button>
+      </Form>
     </div>
   );
 };
