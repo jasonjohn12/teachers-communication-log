@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
+import moment from 'moment';
 const StudentInput = props => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [createdDate, setCreatedDate] = useState(Date(Date.now()));
+  const [createdDate, setCreatedDate] = useState(moment().fromNow());
   const [submit, setSubmit] = useState(true);
   const [notes, setNotes] = useState([""]);
 
@@ -12,7 +13,7 @@ const StudentInput = props => {
     setFirstName("");
     setLastName("");
     setNotes([""]);
-    setCreatedDate(Date(Date.now()));
+    setCreatedDate(moment().fromNow());
     props.addStudent(firstName.trim(), lastName.trim(), createdDate, notes);
   };
   useEffect(() => {
