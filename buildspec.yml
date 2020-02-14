@@ -14,6 +14,12 @@ phases:
     finally:
       - echo Pre Build Completed
     #   - command
+  test:
+    commands:
+      - npm test
+      - npm run cypress:ci
+    finally:
+      - echo Test completed successfully
   build:
     # run-as: root
     commands:
