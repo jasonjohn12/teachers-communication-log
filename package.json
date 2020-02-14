@@ -5,17 +5,21 @@
   "dependencies": {
     "bootstrap": "^4.4.1",
     "cypress": "^3.8.3",
+    "moment": "^2.24.0",
     "react": "^16.9.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.9.0",
-    "react-scripts": "3.1.1"
+    "react-scripts": "3.1.1",
+    "react-test-renderer": "^16.12.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cy:run": "cypress run",
+    "cypress:ci": "start-server-and-test start http://localhost:3000 cy:run"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -35,6 +39,7 @@
   "devDependencies": {
     "install": "^0.13.0",
     "npm": "^6.13.4",
+    "start-server-and-test": "^1.10.8",
     "uuid": "^3.3.3"
   }
 }

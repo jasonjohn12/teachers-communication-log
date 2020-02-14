@@ -3,6 +3,7 @@
 context('Actions', () => {
   beforeEach(() => {
     cy.visit('localhost:3000')
+    cy.get('#LoginButton').click();
   })
 
   // https://on.cypress.io/interacting-with-elements
