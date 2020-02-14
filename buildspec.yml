@@ -11,11 +11,6 @@ phases:
     commands:
       - npm install
       - echo "Pre build initiated"
-    finally:
-      - echo Pre Build Completed
-    #   - command
-  test:
-    commands:
       - npm test
       - npm run cypress:ci
     finally:
