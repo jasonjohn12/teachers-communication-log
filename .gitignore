@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+/cypress/node_modules
+/mockApi/node_modules
 /.pnp
 .pnp.js
 
