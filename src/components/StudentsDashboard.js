@@ -1,8 +1,11 @@
-import React from "react";
+import React,{useContext} from "react";
 import { Accordion, Card, Button } from "react-bootstrap";
+import { StudentsDataContext } from "./contexts/StudentsDataContext";
 
-const StudentDashboard = ({ students }) => {
-  const studentData = students.map(data => (
+const StudentDashboard = ( ) => {
+  const { studentsData } = useContext(StudentsDataContext);
+ 
+  const students = studentsData.map(data => (
     <Card key={data.id}>
       <Card.Header>
         <Accordion.Toggle as={Button} variant="link" eventKey={data.id}>
@@ -11,7 +14,7 @@ const StudentDashboard = ({ students }) => {
       </Card.Header>
       <Accordion.Collapse eventKey={data.id}>
         <Card.Body>
-          <div>Created At: {data.createdDate}</div>
+          <div>Created At: {data.createdAt}</div>
           <div>Notes: {data.notes}</div>
         </Card.Body>
       </Accordion.Collapse>
@@ -22,9 +25,9 @@ const StudentDashboard = ({ students }) => {
       <Accordion defaultActiveKey="0" className="container">
         <label>
           Dashboard Count:{" "}
-          <span className="student-data-count">{studentData.length}</span>
+          <span className="student-data-count">{studentsData.length}</span>
         </label>
-        {studentData}
+        {students}
       </Accordion>
     </React.Fragment>
   );

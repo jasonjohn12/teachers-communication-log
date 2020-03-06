@@ -4,12 +4,12 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
-import AuthContextProvider from "./components/contexts/AuthContext";
+import UserContextProvider from "./components/contexts/UserContext";
 
 ReactDOM.render(
-  <AuthContextProvider>
+  <UserContextProvider>
     <App />
-  </AuthContextProvider>,
+  </UserContextProvider>,
   document.getElementById("root")
 );
 

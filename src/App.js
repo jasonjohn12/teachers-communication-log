@@ -1,46 +1,48 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import Navigation from "./components/Layout/Navbar";
 import StudentInput from "./components/StudentInput";
 import StudentDashboard from "./components/StudentsDashboard";
-import uuid from "uuid/v4";
 import { Container, Row, Col } from "react-bootstrap";
-import {AuthContext} from "./components/contexts/AuthContext";
+import StudentsDataContextProvider from "./components/contexts/StudentsDataContext";
+import { UserContext } from "./components/contexts/UserContext";
 import LandingPage from "./components/Layout/LandingPage";
 
 function App() {
-  const [studentsData, setStudentsData] = useState([]);
+  const { user, logout, login } = useContext(UserContext);
 
-  const addStudent = (firstName, lastName, createdDate, notes) => {
-    setStudentsData([
-      ...studentsData,
-      { id: uuid(), firstName, lastName, createdDate, notes }
-    ]);
+  let isAuthenticated = user !== null ? true : false;
+
+  const onLogOut = () => {
+    logout();
   };
 
-  const logInUser = () => {
-    console.log('do stuff')
+  const onLogin = (username, password) => {
+    login(username, password);
   }
-  const { authentication } = useContext(AuthContext);
-  let isAuthenticated = authentication.status;
+
   return (
     <React.Fragment>
       <Row>
         <Col style={{ marginBottom: "15px" }}>
-          <Navigation />
+          <Navigation user={user} onLogOut={onLogOut} onLogin={login}/>
         </Col>
       </Row>
       {isAuthenticated && isAuthenticated ? (
         <Container>
-          <Row>
-            <Col>
-              <StudentInput addStudent={addStudent} />
-            </Col>
-            <Col>
-              <StudentDashboard students={studentsData} />
-            </Col>
-          </Row>
+          <StudentsDataContextProvider>
+            <Row>
+              <Col>
+                <StudentInput />
+              </Col>
+              <Col>
+                <StudentDashboard />
+              </Col>
+            </Row>
+          </StudentsDataContextProvider>
         </Container>
-      ) : <LandingPage />}
+      ) : (
+        <LandingPage />
+      )}
     </React.Fragment>
   );
 }

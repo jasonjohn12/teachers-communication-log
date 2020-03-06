@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { StudentsDataContext } from "./contexts/StudentsDataContext";
 import { Form, Button } from "react-bootstrap";
-import moment from 'moment';
+
 const StudentInput = props => {
+  const { addStudent } = useContext(StudentsDataContext);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [createdDate, setCreatedDate] = useState(moment().fromNow());
   const [submit, setSubmit] = useState(true);
-  const [notes, setNotes] = useState([""]);
 
   const handleSubmit = e => {
     e.preventDefault();
     setFirstName("");
     setLastName("");
-    setNotes([""]);
-    setCreatedDate(moment().fromNow());
-    props.addStudent(firstName.trim(), lastName.trim(), createdDate, notes);
+    addStudent({ firstName: firstName.trim(), lastName: lastName.trim() });
   };
   useEffect(() => {
     if (firstName !== "" && lastName !== "") {
@@ -23,6 +21,7 @@ const StudentInput = props => {
       setSubmit(true);
     }
   }, [firstName, lastName]);
+
   return (
     <div className="container">
       <Form onSubmit={handleSubmit}>
@@ -47,7 +46,12 @@ const StudentInput = props => {
             required
           />
         </Form.Group>
-        <Button variant="primary" type="submit" disabled={submit} id="submit-button">
+        <Button
+          variant="primary"
+          type="submit"
+          disabled={submit}
+          id="submit-button"
+        >
           Submit
         </Button>
       </Form>

@@ -1,33 +1,38 @@
-import React, {useContext } from "react";
-import { Navbar } from "react-bootstrap";
-import { AuthContext } from "../contexts/AuthContext";
+import React from "react";
+import { Navbar, Button, Nav, Form, FormControl } from "react-bootstrap";
 
-const Navigation = () => {
-  const { authentication, toggleAuthentication } = useContext(AuthContext);
-
-  let authButton = authentication.status ? "Sign Out" : "Sign In";
-
-  const onToggleAuthentication = () => {
-    toggleAuthentication(authentication.status)
-  }
+const Navigation = ({ user, onLogOut, onLogin }) => {
+  console.log(onLogOut);
   return (
-    <Navbar bg="light">
-      <Navbar.Brand>Sinking Pirates</Navbar.Brand>
-      <Navbar.Collapse className="justify-content-end">
-      <Navbar.Text id="LoginButton"
-          onClick={onToggleAuthentication}
-          style={{ cursor: "pointer" }}
-        >
-          {authButton}
-        </Navbar.Text>
-        <Navbar.Text id="LoginButton"
-          onClick={onToggleAuthentication}
-          style={{ cursor: "pointer" }}
-        >
-          {authButton}
-        </Navbar.Text>
-      </Navbar.Collapse>
-    </Navbar>
+    <>
+      <Navbar bg="dark" variant="dark">
+        <Navbar.Brand href="#home">Sinking Pirates</Navbar.Brand>
+        <Nav className="mr-auto"></Nav>
+        <Form inline>
+          {user ? (
+            <Button variant="outline-info" onClick={onLogOut}>
+              {user && user.name}
+            </Button>
+          ) : (
+            <>
+              <FormControl
+                type="text"
+                placeholder="UserName"
+                className="mr-sm-2"
+              />
+              <FormControl
+                type="text"
+                placeholder="Password"
+                className="mr-sm-2"
+              />
+              <Button variant="outline-info" onClick={onLogin}>
+                Login
+              </Button>
+            </>
+          )}
+        </Form>
+      </Navbar>
+    </>
   );
 };
 export default Navigation;
