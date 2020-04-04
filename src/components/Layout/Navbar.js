@@ -2,7 +2,6 @@ import React from "react";
 import { Navbar, Button, Nav, Form, FormControl } from "react-bootstrap";
 
 const Navigation = ({ user, onLogOut, onLogin }) => {
-  console.log(onLogOut);
   return (
     <>
       <Navbar bg="dark" variant="dark">
@@ -10,7 +9,7 @@ const Navigation = ({ user, onLogOut, onLogin }) => {
         <Nav className="mr-auto"></Nav>
         <Form inline>
           {user ? (
-            <Button variant="outline-info" onClick={onLogOut}>
+            <Button id="LoginButton" variant="outline-info" onClick={onLogOut}>
               {user && user.name}
             </Button>
           ) : (
