@@ -8,7 +8,7 @@ import { UserContext } from "./components/contexts/UserContext";
 import LandingPage from "./components/Layout/LandingPage";
 
 function App() {
-  const { user, logout, login } = useContext(UserContext);
+  const { user, logout, loginContext } = useContext(UserContext);
 
   let isAuthenticated = user !== null ? true : false;
 
@@ -17,14 +17,14 @@ function App() {
   };
 
   const onLogin = (username, password) => {
-    login(username, password);
+    loginContext(username, password);
   }
 
   return (
     <React.Fragment>
       <Row>
         <Col style={{ marginBottom: "15px" }}>
-          <Navigation user={user} onLogOut={onLogOut} onLogin={login}/>
+          <Navigation user={user} onLogOut={onLogOut} onLogin={onLogin}/>
         </Col>
       </Row>
       {isAuthenticated && isAuthenticated ? (

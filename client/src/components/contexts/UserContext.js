@@ -1,5 +1,5 @@
 import React, { useState, createContext, useEffect } from "react";
-import { login } from "../../api/authenication";
+import { login, logout, register } from "../../api/authenication";
 export const UserContext = createContext();
 
 //const useMountEffect = func => useEffect(func, []);
@@ -8,13 +8,20 @@ export const UserContext = createContext();
 const UserContextProvider = props => {
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await login("myUserName", "myPassword");
-      setUser(result.data);
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async (userName, password) => {
+  //     const result = await login(userName, password);
+  //     console.log('result', result);
+  //     setUser(result.data);
+  //   };
+  //   fetchData();
+  // }, []);
+
+  const loginContext = async (userName, password) => {
+    const result = await login(userName, password);
+    console.log('result', result);
+    setUser(result.data);
+  };
 
   const logout = () => {
     setUser(null);
@@ -26,7 +33,7 @@ const UserContextProvider = props => {
     setUser(realUser);
   };
   return (
-    <UserContext.Provider value={{ user, register, logout }}>
+    <UserContext.Provider value={{ user, register, logout, loginContext }}>
       {props.children}
     </UserContext.Provider>
   );
