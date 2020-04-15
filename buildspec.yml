@@ -9,7 +9,7 @@ phases:
   pre_build:
     # run-as: root
     commands:
-      - npm install
+      - cd client && npm install
       - echo "Pre build initiated"
     finally:
       - echo Pre Build Completed
@@ -17,13 +17,13 @@ phases:
   build:
     # run-as: root
     commands:
-      - npm run build
+      - cd client && npm run build
     finally:
       - echo Build Phase completed
   post_build:
     commands:
       - echo "Running post deployment"
-      - aws s3 sync ./build s3://sunnyones.com
+      - aws s3 sync ./client/build s3://sunnyones.com
     finally:
       - echo "Done"
 # version: 0.2
