@@ -9,7 +9,7 @@ phases:
   pre_build:
     # run-as: root
     commands:
-      - cd client && npm install
+      - cd ./client && npm install
       - echo "Pre build initiated"
     finally:
       - echo Pre Build Completed
@@ -17,7 +17,7 @@ phases:
   build:
     # run-as: root
     commands:
-      - cd client && npm run build
+      - cd ./client && npm run build
     finally:
       - echo Build Phase completed
   post_build:
@@ -26,50 +26,4 @@ phases:
       - aws s3 sync ./client/build s3://sunnyones.com
     finally:
       - echo "Done"
-# version: 0.2
-# # run-as: root
 
-# phases:
-#   install:
-#     runtime-versions:
-#       nodejs: 10
-#   pre_build:
-#     # run-as: root
-#     commands:
-#       - npm install
-#       - echo "Pre build initiated"
-#     #   - command
-#   build:
-#     # run-as: root
-#     commands:
-#       - npm run build
-#   post_build:
-#     commands:
-#       - echo "Running post deployment"
-#       - aws s3 sync ./build s3://sunnyones.com
-
-#   - command
-# artifacts:
-#   files:
-#     - location
-#     - location
-#     - name
-#   discard-paths: yes
-#   base-directory: location
-#   secondary-artifacts:
-#     artifactIdentifier:
-#       files:
-#         - location
-#         - location
-#       discard-paths: yes
-#       base-directory: location
-#     artifactIdentifier:
-#       files:
-#         - location
-#         - location
-#       discard-paths: yes
-#       base-directory: location
-# cache:
-#   paths:
-#     - path
-#     - path
