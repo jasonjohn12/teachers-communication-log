@@ -26,7 +26,7 @@ phases:
   post_build:
     commands:
       - echo "Running post deployment"
-      - aws s3 sync ./client/build s3://sunnyones.com
+      - aws s3 sync ./build s3://sunnyones.com
     finally:
       - echo "Done"
 
