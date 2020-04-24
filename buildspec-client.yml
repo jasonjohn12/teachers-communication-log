@@ -9,7 +9,8 @@ phases:
   pre_build:
     # run-as: root
     commands:
-      - cd client && npm install
+      - cd client
+      - npm install
       - echo "Pre build initiated"
     finally:
       - echo Pre Build Completed
@@ -17,7 +18,8 @@ phases:
   build:
     # run-as: root
     commands:
-      - cd client/ && npm run build
+      - cd client 
+      - npm run build
     finally:
       - echo Build Phase completed
   post_build:
