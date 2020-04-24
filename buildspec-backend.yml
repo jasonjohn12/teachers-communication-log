@@ -1,0 +1,19 @@
+version: 0.2
+
+env:
+  variables:
+    SOLUTION: .\CommunicationLOG.API.sln
+    PACKAGE_DIRECTORY: .\packages
+    DOTNET_FRAMEWORK: 4.6.2
+
+# https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html
+phases:
+    pre_build:
+        commands:
+            - dotnet restore CommunicationLOG.API.sln
+    build:
+        commands:
+        - echo done
+cache:
+    paths:
+        - '~/.nuget/packages'
