@@ -1,14 +1,26 @@
 using System;
 using System.Threading.Tasks;
+using CommunicationLog.API.Data;
 using CommunicationLog.API.Dtos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace CommunicationLog.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class AuthController : ControllerBase
     {
+        private IConfiguration _config;
+        private IAuthRepository _repo;
+
+        public AuthController(IAuthRepository repo, IConfiguration config)
+        {
+            _config = config;
+            _repo = repo;
+
+        }
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userforLogin)
         {
@@ -21,13 +33,10 @@ namespace CommunicationLog.API.Controllers
             {
                 return BadRequest("Password is required");
             };
+            var userFromRepo = await _repo.Login(userforLogin.Username.ToLower(), userforLogin.Password);
+
     
-            return Ok(new {
-                id = 1,
-                firstName = "Jason",
-                lastName = "john",
-                email = "test@test.com"
-            });
+            return Ok(userFromRepo);
         }
 
          [HttpPost("Register")]

@@ -15,7 +15,10 @@ const StudentDashboard = ( ) => {
       <Accordion.Collapse eventKey={data.id}>
         <Card.Body>
           <div>Created At: {data.createdAt}</div>
-          <div>Notes: {data.notes}</div>
+        {data.notes.length > 1 && data.notes.map(note => (
+         <div key={note.noteId}>Note: {note.note}</div>
+       ))}
+          {/* <div>Notes: {data.notes}</div> */}
         </Card.Body>
       </Accordion.Collapse>
     </Card>

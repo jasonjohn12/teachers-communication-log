@@ -11,7 +11,7 @@ const StudentsDataContextProvider = props => {
       firstName: "Jason",
       lastName: "John",
       createdAt: moment().fromNow(),
-      notes: [""]
+      notes: [{noteId: uuid(), note: "My first note"},{noteId: uuid(), note: "My second note"},{noteId: uuid(), note: "My third note"}]
     }
   ]);
   function addStudent(student) {

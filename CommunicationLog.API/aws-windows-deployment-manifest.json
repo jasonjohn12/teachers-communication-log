@@ -1,0 +1,14 @@
+{
+    "manifestVersion": 1,
+    "deployments": {
+      "aspNetCoreWeb": [
+        {
+          "name": "my-dotnet-core-app",
+          "parameters": {
+            "archive": "site.zip",
+            "iisPath": "/"
+          }
+        }
+      ]
+    }
+  }

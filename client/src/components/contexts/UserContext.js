@@ -2,20 +2,11 @@ import React, { useState, createContext, useEffect } from "react";
 import { login, logout, register } from "../../api/authenication";
 export const UserContext = createContext();
 
-//const useMountEffect = func => useEffect(func, []);
+
 // have loading spinner
 // create a login page
 const UserContextProvider = props => {
   const [user, setUser] = useState(null);
-
-  // useEffect(() => {
-  //   const fetchData = async (userName, password) => {
-  //     const result = await login(userName, password);
-  //     console.log('result', result);
-  //     setUser(result.data);
-  //   };
-  //   fetchData();
-  // }, []);
 
   const loginContext = async (userName, password) => {
     const result = await login(userName, password);
