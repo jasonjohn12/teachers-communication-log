@@ -7,8 +7,8 @@ using Microsoft.Extensions.Configuration;
 
 namespace CommunicationLog.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
 
     public class AuthController : ControllerBase
     {
