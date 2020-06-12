@@ -1,9 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import Navigation from "./components/Layout/Navbar";
+import Dashboard from "./components/Dashboard";
 import StudentInput from "./components/StudentInput";
 import StudentDashboard from "./components/StudentsDashboard";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
-import StudentsDataContextProvider from "./components/contexts/StudentsDataContext";
+
 import { UserContext } from "./components/contexts/UserContext";
 import LandingPage from "./components/Layout/LandingPage";
 
@@ -42,16 +43,7 @@ function App() {
               <span className="sr-only">Loading...</span>
             </Spinner>
           ) : (
-            <StudentsDataContextProvider>
-              <Row>
-                <Col>
-                  <StudentInput />
-                </Col>
-                <Col>
-                  <StudentDashboard />
-                </Col>
-              </Row>
-            </StudentsDataContextProvider>
+            <Dashboard />
           )}
         </Container>
       ) : (
