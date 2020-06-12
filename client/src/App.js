@@ -1,8 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import Navigation from "./components/Layout/Navbar";
 import Dashboard from "./components/Dashboard";
-import StudentInput from "./components/StudentInput";
-import StudentDashboard from "./components/StudentsDashboard";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
 
 import { UserContext } from "./components/contexts/UserContext";
@@ -30,7 +28,7 @@ function App() {
   };
 
   return (
-    <React.Fragment>
+    <>
       <Row>
         <Col style={{ marginBottom: "15px" }}>
           <Navigation user={user} onLogOut={onLogOut} onLogin={onLogin} />
@@ -49,7 +47,7 @@ function App() {
       ) : (
         <LandingPage />
       )}
-    </React.Fragment>
+    </>
   );
 }
 

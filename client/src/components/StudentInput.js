@@ -1,18 +1,23 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StudentsDataContext } from "./contexts/StudentsDataContext";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Col } from "react-bootstrap";
 
-const StudentInput = props => {
-  const { addStudent } = useContext(StudentsDataContext);
+const StudentInput = (props) => {
+  const { addNewStudent } = useContext(StudentsDataContext);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [grade, setGrade] = useState("");
   const [submit, setSubmit] = useState(true);
-
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setFirstName("");
     setLastName("");
-    addStudent({ firstName: firstName.trim(), lastName: lastName.trim() });
+    setGrade("");
+    addNewStudent({
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      grade,
+    });
   };
   useEffect(() => {
     if (firstName !== "" && lastName !== "") {
@@ -23,37 +28,39 @@ const StudentInput = props => {
   }, [firstName, lastName]);
 
   return (
-    <div className="container">
+    <div style={{ marginTop: "75px" }}>
       <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formFirstName">
-          <Form.Label>FirstName</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="First Name"
-            value={firstName}
-            onChange={e => setFirstName(e.target.value)}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formLastName">
-          <Form.Label>Last Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Last Name"
-            value={lastName}
-            onChange={e => setLastName(e.target.value)}
-            required
-          />
-        </Form.Group>
-        <Button
-          variant="primary"
-          type="submit"
-          disabled={submit}
-          id="submit-button"
-        >
-          Submit
-        </Button>
+        <Form.Row>
+          <Col>
+            <Form.Control
+              placeholder="First Name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </Col>
+          <Col>
+            <Form.Control
+              placeholder="Last Name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </Col>
+          <Col>
+            <Form.Control
+              placeholder="Grade"
+              value={grade}
+              onChange={(e) => setGrade(e.target.value)}
+            />
+          </Col>
+          <Button type="submit">Submit</Button>
+          <Button
+            style={{ marginLeft: "5px" }}
+            variant="danger"
+            onClick={() => console.log("CLOSING")}
+          >
+            Cancel
+          </Button>
+        </Form.Row>
       </Form>
     </div>
   );

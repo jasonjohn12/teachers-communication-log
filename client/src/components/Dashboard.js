@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import StudentDashboard from "./StudentsDashboard";
-import StudentInput from "./StudentInput";
-import { Container, Row, Col, Spinner } from "react-bootstrap";
+import StudentEntries from "./StudentEntries";
+
 import StudentsDataContextProvider from "../components/contexts/StudentsDataContext";
 const Dashboard = () => {
+  const [showEntries, setShowEntries] = useState(false);
+  const [student, setStudent] = useState({});
+  const onShowEntries = (student) => {
+    console.log("student", student);
+    if (student) setStudent(student);
+    setShowEntries(!showEntries);
+  };
   return (
     <StudentsDataContextProvider>
-      <StudentDashboard />
+      {showEntries ? (
+        <StudentEntries onShowEntries={onShowEntries} student={student} />
+      ) : (
+        <StudentDashboard onShowEntries={onShowEntries} />
+      )}
     </StudentsDataContextProvider>
   );
 };
