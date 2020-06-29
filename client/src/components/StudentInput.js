@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { StudentsDataContext } from "./contexts/StudentsDataContext";
 import { Form, Button, Col } from "react-bootstrap";
 
-const StudentInput = (props) => {
+const StudentInput = ({ closeForm }) => {
   const { addNewStudent } = useContext(StudentsDataContext);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -56,7 +56,7 @@ const StudentInput = (props) => {
           <Button
             style={{ marginLeft: "5px" }}
             variant="danger"
-            onClick={() => console.log("CLOSING")}
+            onClick={closeForm}
           >
             Cancel
           </Button>

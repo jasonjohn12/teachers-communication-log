@@ -11,10 +11,25 @@ const StudentEntries = ({ onShowEntries, student }) => {
     getEntriesByStudentId(student.studentId).then((entry) =>
       setEntries(entry.data)
     );
-
-    // setEntries(data);
   }, [student.studentId]);
-  console.log("entries", entries);
+
+  useEffect(() => {
+    getEntriesByStudentId(student.studentId).then((entry) =>
+      setEntries(entry.data)
+    );
+  }, [entries]);
+
+  const onAddNewEntry = (studentId, notes, contacted) => {
+    console.log(studentId, notes, contacted);
+    const entry = {
+      studentId,
+      notes,
+      contacted,
+    };
+    setEntries([...entries, entry]);
+  };
+
+  const onCloseEntryForm = () => setShowEntryForm(false);
 
   const renderEntries = (entry, index) => (
     <tr
@@ -54,7 +69,13 @@ const StudentEntries = ({ onShowEntries, student }) => {
       <Button onClick={() => setShowEntryForm(!showEntryForm)}>
         Add New Entry
       </Button>
-      {showEntryForm && <EntryForm {...student} />}
+      {showEntryForm && (
+        <EntryForm
+          {...student}
+          closeForm={onCloseEntryForm}
+          addedNewEntry={onAddNewEntry}
+        />
+      )}
     </div>
   );
 };

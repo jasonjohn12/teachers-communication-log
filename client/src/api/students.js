@@ -8,6 +8,7 @@ export function getStudentById(studentId) {
 }
 
 export function addStudent(student) {
+  console.log(student);
   return axios.post("http://localhost:5000/api/students", student);
 }
 

@@ -46,7 +46,7 @@ namespace CommunicationLog.API.Controllers
                 StudentId = id,
                 FirstName = student.FirstName,
                 LastName = student.LastName,
-                Grade = 65
+                Grade = student.Grade
             };
             StudentsDataStore.Current.Students.Add(createdStudent);
            return StatusCode(201);

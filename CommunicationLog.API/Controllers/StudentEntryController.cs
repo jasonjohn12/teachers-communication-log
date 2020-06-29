@@ -47,9 +47,9 @@ namespace CommunicationLog.API.Controllers
             {
                 EntryId = id,
                 StudentId = studentId,
-                Contacted = false,
+                Contacted = entryDto.Contacted,
                 DatesContacted = DateTime.Now,
-                Notes = "This student needs to step up"
+                Notes = entryDto.Notes
             };
 
             StudentEntryDataStore.Current.Entries.Add(createdEntry);

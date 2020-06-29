@@ -1,16 +1,17 @@
 import React, { useState, createContext, useEffect } from "react";
 
 import { getStudents, addStudent } from "../../api/students";
-//import { deleteEntry } from "../../api/entries";
+import {
+  createNewEntry,
+  deleteEntry,
+  getEntriesByStudentId,
+} from "../../api/entries";
 
 export const StudentsDataContext = createContext();
 
 const StudentsDataContextProvider = (props) => {
+  console.log("studentContextRender");
   const [studentsData, setStudentsData] = useState([]);
-
-  useEffect(() => {
-    console.log("context");
-  }, [studentsData]);
 
   useEffect(() => {
     getStudentsContext();
@@ -29,14 +30,13 @@ const StudentsDataContextProvider = (props) => {
   function addNewStudent(student) {
     const newStudent = {
       ...student,
-      id: Math.floor(Math.random() * Math.floor(100)),
       grade: Number(student.grade),
     };
 
     addStudent(newStudent)
       .then((response) => {
         if (response.status === 201) {
-          setStudentsData([...studentsData, response.data]);
+          getStudentsContext();
         }
       })
       .catch((error) => {
@@ -48,9 +48,14 @@ const StudentsDataContextProvider = (props) => {
     // deleteEntry(entryId);
     console.log(`Entry with id: ${entryId} is deleted`);
   };
-  const addStudentEntry = (entry, studentId) => {
-    //deleteEntry(entryId);
-    // console.log(`Entry with id: ${entryId} is deleted`);
+
+  const addStudentEntry = (studentId, notes, contacted) => {
+    var entry = {
+      notes,
+      contacted,
+    };
+    console.log(entry, studentId);
+    createNewEntry(entry, studentId);
   };
 
   return (

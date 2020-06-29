@@ -1,17 +1,19 @@
-import React, { useState } from "react";
-import { Form, Button, Col } from "react-bootstrap";
-import { createNewEntry } from "../api/entries";
-const EntryForm = (student) => {
-  console.log("student", student);
+import React, { useState, useContext } from "react";
+import { Form, Button } from "react-bootstrap";
+import { addStudentEnry } from "../api/entries";
+import { StudentsDataContext } from "./contexts/StudentsDataContext";
+const EntryForm = ({ studentId, closeForm, addedNewEntry }) => {
+  const { addStudentEntry } = useContext(StudentsDataContext);
   const [contacted, setContacted] = useState(false);
   const [notes, setNotes] = useState("");
 
   const onHandleSubmit = (e) => {
     e.preventDefault();
-    createNewEntry(student.studentId, { notes, contacted });
-    console.log("submitting form");
+    addStudentEntry(studentId, notes, contacted);
+    addedNewEntry(studentId, notes, contacted);
     setContacted(false);
     setNotes("");
+    closeForm();
   };
   return (
     <Form style={{ marginTop: "75px" }} onSubmit={onHandleSubmit}>
@@ -31,6 +33,7 @@ const EntryForm = (student) => {
           value={contacted}
           onChange={() => setContacted(!contacted)}
         />
+        {contacted.toString()}
       </Form.Group>
       <Button variant="primary" type="submit">
         Submit

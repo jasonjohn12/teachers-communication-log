@@ -1,13 +1,13 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { StudentsDataContext } from "./contexts/StudentsDataContext";
 import StudentInput from "./StudentInput";
 
 const StudentDashboard = ({ onShowEntries }) => {
-  console.log("props", onShowEntries);
   const { studentsData } = useContext(StudentsDataContext);
-
+  console.log("studentDaata", studentsData);
   const [showForm, setShowForm] = useState(false);
+  const onCloseForm = () => setShowForm(false);
 
   const renderStudents = (student, index) => (
     <tr
@@ -22,9 +22,11 @@ const StudentDashboard = ({ onShowEntries }) => {
       <td>{student.grade}</td>
     </tr>
   );
+
   return (
     <>
       <h3>Dashboard</h3>
+      <h6>You have {studentsData.length} students</h6>
       <Table responsive hover>
         <thead>
           <tr>
@@ -36,7 +38,7 @@ const StudentDashboard = ({ onShowEntries }) => {
       </Table>
       <Button onClick={() => setShowForm(!showForm)}>Add Student</Button>
 
-      {showForm && <StudentInput />}
+      {showForm && <StudentInput closeForm={onCloseForm} />}
     </>
   );
 };

@@ -7,7 +7,6 @@ const Dashboard = () => {
   const [showEntries, setShowEntries] = useState(false);
   const [student, setStudent] = useState({});
   const onShowEntries = (student) => {
-    console.log("student", student);
     if (student) setStudent(student);
     setShowEntries(!showEntries);
   };
