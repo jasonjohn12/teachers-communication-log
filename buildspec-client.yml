@@ -21,7 +21,7 @@ phases:
     # run-as: root
     commands:
       - cd ./client
-      - npm run cypress:ci
+      - npm run cypress:ci & npx wait-on http://localhost:3000
       - npm run build
     finally:
       - echo Build Phase completed
