@@ -24,7 +24,7 @@ phases:
     # run-as: root
     commands:
       - cd ./client
-      - - "npm start & npx wait-on http://127.0.0.1:8080"
+      - "npm start & npx wait-on http://127.0.0.1:8080"
       - npm run build
     finally:
       - echo Build Phase completed
