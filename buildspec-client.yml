@@ -26,8 +26,7 @@ phases:
     commands:
       - cd ./client
       - npm run cy:verify
-      - npm start & npx wait-on http://localhost:3000
-      - npm run cy:run
+      - npm run cy:ci
       - npm run build
     finally:
       - echo Build Phase completed
