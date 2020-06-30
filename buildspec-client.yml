@@ -23,8 +23,8 @@ phases:
     commands:
       - cd ./client
       - npm install --save-dev start-server-and-test
+      - npm install --save-dev http-server
       - npm run cypress:ci
-      - npm run cy:run
       - npm run build
     finally:
       - echo Build Phase completed

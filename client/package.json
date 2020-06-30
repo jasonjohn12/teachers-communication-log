@@ -18,8 +18,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cy:open": "cypress open",
-    "cy:run": "cypress run",
-    "cypress:ci": "START_SERVER_AND_TEST_INSECURE=1 start-server-and-test start http-get://localhost:3000 cy:run"
+    "cy:run": "cypress run --headless",
+    "cy:ci": "start-server-and-test 'http-server -c-1 --silent' 3000 'cypress run --spec cypress/integration/Navbar.spec.js'"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "cypress": "^4.3.0",
+    "http-server": "^0.12.3",
     "install": "^0.13.0",
     "npm": "^6.13.4",
     "start-server-and-test": "^1.11.0",
