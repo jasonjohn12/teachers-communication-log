@@ -12,6 +12,7 @@ export const StudentsDataContext = createContext();
 const StudentsDataContextProvider = (props) => {
   console.log("studentContextRender");
   const [studentsData, setStudentsData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getStudentsContext();
@@ -36,7 +37,8 @@ const StudentsDataContextProvider = (props) => {
     addStudent(newStudent)
       .then((response) => {
         if (response.status === 201) {
-          getStudentsContext();
+          // getStudentsContext();
+          setStudentsData([...studentsData, response.data]);
         }
       })
       .catch((error) => {

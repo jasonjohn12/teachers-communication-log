@@ -49,7 +49,7 @@ namespace CommunicationLog.API.Controllers
                 Grade = student.Grade
             };
             StudentsDataStore.Current.Students.Add(createdStudent);
-           return StatusCode(201);
+           return StatusCode(201, createdStudent);
         }
 
         [HttpDelete("{id}")]
