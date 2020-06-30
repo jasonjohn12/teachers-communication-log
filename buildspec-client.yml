@@ -21,7 +21,7 @@ phases:
     # run-as: root
     commands:
       - cd ./client
-      - node_modules/.bin/cypress run
+      - npm run cypress:ci
       - npm run build
     finally:
       - echo Build Phase completed

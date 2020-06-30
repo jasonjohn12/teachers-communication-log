@@ -19,7 +19,7 @@
     "eject": "react-scripts eject",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "cypress:ci": "start-server-and-test start 172.17.0.2/ cy:run"
+    "cypress:ci": "start-server-and-test start http-get://localhost:3000 cy:run"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,7 +40,7 @@
     "cypress": "^4.3.0",
     "install": "^0.13.0",
     "npm": "^6.13.4",
-    "start-server-and-test": "^1.10.8",
+    "start-server-and-test": "^1.11.0",
     "uuid": "^3.3.3"
   }
 }
