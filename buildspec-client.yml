@@ -5,7 +5,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 10.8
+      nodejs: 10
   pre_build:
     # run-as: root
     commands:
@@ -26,7 +26,7 @@ phases:
     commands:
       - cd ./client
       - npm run cy:verify
-      - ci:start-server
+      - npm start & npx wait-on http://localhost:3000
       - npm run cy:run
       - npm run build
     finally:
