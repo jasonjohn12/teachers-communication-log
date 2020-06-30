@@ -19,7 +19,7 @@
     "eject": "react-scripts eject",
     "cy:open": "cypress open",
     "cy:run": "cypress run --headless",
-    "cy:ci": "start-server-and-test 'http-server -c-1 --silent' 3000 'cypress run --spec cypress/integration/Navbar.spec.js'"
+    "cy:ci": "START_SERVER_AND_TEST_INSECURE=1 start-server-and-test start http-get://172.17.0.2/ cy:run"
   },
   "eslintConfig": {
     "extends": "react-app"
