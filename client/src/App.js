@@ -1,9 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import Navigation from "./components/Layout/Navbar";
-import StudentInput from "./components/StudentInput";
-import StudentDashboard from "./components/StudentsDashboard";
+import Dashboard from "./components/Dashboard";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
-import StudentsDataContextProvider from "./components/contexts/StudentsDataContext";
+
 import { UserContext } from "./components/contexts/UserContext";
 import LandingPage from "./components/Layout/LandingPage";
 
@@ -29,7 +28,7 @@ function App() {
   };
 
   return (
-    <React.Fragment>
+    <>
       <Row>
         <Col style={{ marginBottom: "15px" }}>
           <Navigation user={user} onLogOut={onLogOut} onLogin={onLogin} />
@@ -42,22 +41,13 @@ function App() {
               <span className="sr-only">Loading...</span>
             </Spinner>
           ) : (
-            <StudentsDataContextProvider>
-              <Row>
-                <Col>
-                  <StudentInput />
-                </Col>
-                <Col>
-                  <StudentDashboard />
-                </Col>
-              </Row>
-            </StudentsDataContextProvider>
+            <Dashboard />
           )}
         </Container>
       ) : (
         <LandingPage />
       )}
-    </React.Fragment>
+    </>
   );
 }
 

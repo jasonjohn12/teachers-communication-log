@@ -11,6 +11,7 @@ phases:
     commands:
       - cd ./client
       - npm install
+      - apt-get install -y libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 xvfb
       - cd ..
       - echo "Pre build initiated"
     finally:
@@ -19,7 +20,8 @@ phases:
   build:
     # run-as: root
     commands:
-      - cd ./client 
+      - cd ./client
+      - npm run cypress:ci
       - npm run build
     finally:
       - echo Build Phase completed
@@ -29,4 +31,3 @@ phases:
       - aws s3 sync ./build s3://sunnyones.com
     finally:
       - echo "Done"
-

@@ -1,35 +1,75 @@
-import React, { useState, createContext } from "react";
-import moment from "moment";
-import uuid from "uuid/v4";
+import React, { useState, createContext, useEffect } from "react";
+
+import { getStudents, addStudent } from "../../api/students";
+import {
+  createNewEntry,
+  deleteEntry,
+  getEntriesByStudentId,
+} from "../../api/entries";
 
 export const StudentsDataContext = createContext();
 
-const StudentsDataContextProvider = props => {
-  const [studentsData, setStudentsData] = useState([
-    {
-      id: uuid(),
-      firstName: "Jason",
-      lastName: "John",
-      createdAt: moment().fromNow(),
-      notes: [{noteId: uuid(), note: "My first note"},{noteId: uuid(), note: "My second note"},{noteId: uuid(), note: "My third note"}]
-    }
-  ]);
-  function addStudent(student) {
-    const { firstName, lastName } = student;
-    setStudentsData([
-      ...studentsData,
-      {
-        id: uuid(),
-        firstName,
-        lastName,
-        createdAt: moment().fromNow(),
-        notes: [""]
-      }
-    ]);
+const StudentsDataContextProvider = (props) => {
+  console.log("studentContextRender");
+  const [studentsData, setStudentsData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getStudentsContext();
+  }, []);
+
+  const getStudentsContext = async () => {
+    const result = await getStudents();
+    setStudentsData(result.data);
+  };
+
+  const getStudentByIdContext = async (id) => {
+    const result = await getStudents(id);
+    setStudentsData(result.data);
+  };
+
+  function addNewStudent(student) {
+    const newStudent = {
+      ...student,
+      grade: Number(student.grade),
+    };
+
+    addStudent(newStudent)
+      .then((response) => {
+        if (response.status === 201) {
+          // getStudentsContext();
+          setStudentsData([...studentsData, response.data]);
+        }
+      })
+      .catch((error) => {
+        alert(`Unable to add student. Please try again. ${error.message}`);
+      });
   }
 
+  const deleteStudentEntry = (entryId) => {
+    // deleteEntry(entryId);
+    console.log(`Entry with id: ${entryId} is deleted`);
+  };
+
+  const addStudentEntry = (studentId, notes, contacted) => {
+    var entry = {
+      notes,
+      contacted,
+    };
+    console.log(entry, studentId);
+    createNewEntry(entry, studentId);
+  };
+
   return (
-    <StudentsDataContext.Provider value={{ studentsData, addStudent }}>
+    <StudentsDataContext.Provider
+      value={{
+        studentsData,
+        addNewStudent,
+        getStudentByIdContext,
+        addStudentEntry,
+        deleteStudentEntry,
+      }}
+    >
       {props.children}
     </StudentsDataContext.Provider>
   );

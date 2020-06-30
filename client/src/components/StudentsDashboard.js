@@ -1,38 +1,45 @@
-import React,{useContext} from "react";
-import { Accordion, Card, Button } from "react-bootstrap";
+import React, { useContext, useState } from "react";
+import { Button, Table } from "react-bootstrap";
 import { StudentsDataContext } from "./contexts/StudentsDataContext";
+import StudentInput from "./StudentInput";
 
-const StudentDashboard = ( ) => {
+const StudentDashboard = ({ onShowEntries }) => {
   const { studentsData } = useContext(StudentsDataContext);
- 
-  const students = studentsData.map(data => (
-    <Card key={data.id}>
-      <Card.Header>
-        <Accordion.Toggle as={Button} variant="link" eventKey={data.id}>
-          {data.firstName} {data.lastName}
-        </Accordion.Toggle>
-      </Card.Header>
-      <Accordion.Collapse eventKey={data.id}>
-        <Card.Body>
-          <div>Created At: {data.createdAt}</div>
-        {data.notes.length > 1 && data.notes.map(note => (
-         <div key={note.noteId}>Note: {note.note}</div>
-       ))}
-          {/* <div>Notes: {data.notes}</div> */}
-        </Card.Body>
-      </Accordion.Collapse>
-    </Card>
-  ));
+  console.log("studentDaata", studentsData);
+  const [showForm, setShowForm] = useState(false);
+  const onCloseForm = () => setShowForm(false);
+
+  const renderStudents = (student, index) => (
+    <tr
+      key={index}
+      onClick={() => onShowEntries(student)}
+      style={{
+        cursor: "pointer",
+        backgroundColor: student.grade < 59.5 ? "rgba(247, 27, 27, 0.15)" : "",
+      }}
+    >
+      <td>{student.firstName}</td>
+      <td>{student.grade}</td>
+    </tr>
+  );
+
   return (
-    <React.Fragment>
-      <Accordion defaultActiveKey="0" className="container">
-        <label>
-          Dashboard Count:{" "}
-          <span className="student-data-count">{studentsData.length}</span>
-        </label>
-        {students}
-      </Accordion>
-    </React.Fragment>
+    <>
+      <h3>Dashboard</h3>
+      <h6>You have {studentsData.length} students</h6>
+      <Table responsive hover>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Grade</th>
+          </tr>
+        </thead>
+        <tbody>{studentsData.map(renderStudents)}</tbody>
+      </Table>
+      <Button onClick={() => setShowForm(!showForm)}>Add Student</Button>
+
+      {showForm && <StudentInput closeForm={onCloseForm} />}
+    </>
   );
 };
 export default StudentDashboard;
