@@ -13,6 +13,8 @@ phases:
       - cd ./client
       - npm install
       - npm install -g wait-on
+      - npm install --save-dev start-server-and-test
+      - npm install --save-dev http-server
       - cd ..
       - echo "Pre build initiated"
     finally:
@@ -22,9 +24,7 @@ phases:
     # run-as: root
     commands:
       - cd ./client
-      - npm install --save-dev start-server-and-test
-      - npm install --save-dev http-server
-      - npm run cypress:ci
+      - npm run cy:ci
       - npm run build
     finally:
       - echo Build Phase completed
