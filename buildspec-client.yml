@@ -25,6 +25,7 @@ phases:
     commands:
       - cd ./client
       - npm run cy:verify
+      - npm start & npx wait-on http://localhost:3000
       - node_modules/.bin/cypress run
       - npm run build
     finally:
