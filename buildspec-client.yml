@@ -7,14 +7,12 @@ phases:
   pre_build:
     # run-as: root
     commands:
-      - yum -y install xorg-x11-server-Xvfb.x86_64 gtk3-devel.x86_64 libnotify-devel.x86_64 GConf2-3.2.6-8.amzn2.0.2.x86_64 nss-3.44.0-4.amzn2.0.2.x86_64 libXScrnSaver.x86_64 alsa-lib-1.1.4.1-2.amzn2.x86_64
+      # - yum -y install xorg-x11-server-Xvfb.x86_64 gtk3-devel.x86_64 libnotify-devel.x86_64 GConf2-3.2.6-8.amzn2.0.2.x86_64 nss-3.44.0-4.amzn2.0.2.x86_64 libXScrnSaver.x86_64 alsa-lib-1.1.4.1-2.amzn2.x86_64
       - cd ./client
       - npm install
       - npm install -g wait-on
-      - npm install --save-dev start-server-and-test
-      - npm install --save-dev http-server
-      - npm start & npx wait-on http://localhost:3000
-      - npm cypress run
+      - npm install cypress --save-dev
+      - npm install -g wait-on
       - cd ..
       - echo "Pre build initiated"
     finally:
@@ -24,7 +22,8 @@ phases:
     # run-as: root
     commands:
       - cd ./client
-      - npm run build
+      - npm start & wait-on http://localhost:3000
+      - node_modules/.bin/cypress run
     finally:
       - echo Build Phase completed
   post_build:
