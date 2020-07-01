@@ -22,7 +22,7 @@ phases:
     # run-as: root
     commands:
       - cd ./client
-      - npm start & wait-on http://localhost:3000
+      - npm start & wait-on http://172.17.0.2/
       - node_modules/.bin/cypress run
     finally:
       - echo Build Phase completed
