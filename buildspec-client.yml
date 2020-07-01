@@ -13,6 +13,8 @@ phases:
       - npm install -g wait-on
       - npm install --save-dev start-server-and-test
       - npm install --save-dev http-server
+      - npm start & npx wait-on http://172.17.0.2/
+      - npm cypress run
       - cd ..
       - echo "Pre build initiated"
     finally:
@@ -22,9 +24,6 @@ phases:
     # run-as: root
     commands:
       - cd ./client
-      - npm run cy:verify
-      - npm start & npx wait-on http://172.17.0.2/
-      - npm cypress run
       - npm run build
     finally:
       - echo Build Phase completed
