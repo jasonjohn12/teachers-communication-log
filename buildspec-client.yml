@@ -22,7 +22,7 @@ phases:
 
     commands:
       - cd ./client
-      - npm start & npx wait-on http://localhost:3000
+      - npm start & npx wait-on http://172.17.0.2/
       - npx cypress run
     finally:
       - echo Build Phase completed
