@@ -19,6 +19,7 @@ phases:
     #   - command
   build:
     # run-as: root
+
     commands:
       - cd ./client
       - npm start & npx wait-on http://localhost:3000
