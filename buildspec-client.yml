@@ -23,7 +23,7 @@ phases:
     commands:
       - cd ./client
       - npm start & npx wait-on http://172.17.0.2/
-      - npx cypress run
+      - node_modules/.bin/cypress run --env environment=ci
     finally:
       - echo Build Phase completed
   post_build:
