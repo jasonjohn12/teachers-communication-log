@@ -22,7 +22,7 @@ phases:
 
     commands:
       - cd ./client
-      - npm run cy:start-server
+      - npm run ci:start-server
     finally:
       - echo Build Phase completed
   post_build:
