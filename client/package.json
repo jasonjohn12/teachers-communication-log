@@ -20,8 +20,8 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "cy:verify": "cypress verify",
-    "ci:start-server": "start-server-and-test start  http://localhost:3000/ cy:run",
-    "cy:ci": "start-server-and-test start http://172.17.0.2/ cy:run"
+    "ci:start-server": "start-server-and-test start http://localhost:3000/  cy:run",
+    "cy:ci": "start-server-and-test start http://172.17.0.2/ & cy:run"
   },
   "eslintConfig": {
     "extends": "react-app"
