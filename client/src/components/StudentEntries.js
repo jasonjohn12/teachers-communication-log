@@ -1,50 +1,75 @@
 import React, { useEffect, useState } from "react";
+import { createNewEntry } from "../api/entries";
 import moment from "moment";
 import { getEntriesByStudentId } from "../api/entries";
-import { Button, Table } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import EntryForm from "./EntryForm";
+import "antd/dist/antd.css";
+import { Table } from "antd";
 
 const StudentEntries = ({ onShowEntries, student }) => {
   const [entries, setEntries] = useState([]);
   const [showEntryForm, setShowEntryForm] = useState(false);
-  useEffect(() => {
-    getEntriesByStudentId(student.studentId).then((entry) =>
-      setEntries(entry.data)
-    );
-  }, [student.studentId]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getEntriesByStudentId(student.studentId).then((entry) =>
-      setEntries(entry.data)
+    getEntriesByStudentId(student.studentId).then((res) =>
+      setEntries(
+        res.data.map((row) => ({
+          studentId: row.studentId,
+          contacted: row.contacted ? "Yes" : "No",
+          datesContacted: moment(row.datesContacted).format("MM/DD/YYYY"),
+          notes: row.notes,
+          key: row.entryId,
+          entryId: row.entryId,
+        }))
+      )
     );
-  }, [entries]);
+    setLoading(false);
+  }, []);
 
   const onAddNewEntry = (studentId, notes, contacted) => {
+    setLoading(true);
     console.log(studentId, notes, contacted);
     const entry = {
       studentId,
+      datesContacted: new Date(),
       notes,
       contacted,
     };
+    createNewEntry(entry, studentId).then((response) => {
+      setLoading(false);
+      if (response.status === 201) {
+        const returnEntry = {
+          contacted: response.data.contacted ? "Yes" : "No",
+          datesContacted: moment(response.data.datesContacted).format(
+            "MM/DD/YYYY"
+          ),
+          notes: response.data.notes,
+        };
+        setEntries([...entries, returnEntry]);
+      }
+    });
     setEntries([...entries, entry]);
   };
 
   const onCloseEntryForm = () => setShowEntryForm(false);
 
-  const renderEntries = (entry, index) => (
-    <tr
-      key={index}
-      onClick={() => onShowEntries(student)}
-      style={{
-        cursor: "pointer",
-      }}
-    >
-      <td>{entry.contacted.toString()}</td>
-      <td>{moment(entry.datesContacted).format("MM/DD/YYYY")}</td>
-
-      <td>{entry.notes}</td>
-    </tr>
-  );
+  const columns = [
+    {
+      title: "Parent Contacted",
+      dataIndex: "contacted",
+    },
+    {
+      title: "Date Entered",
+      dataIndex: "datesContacted",
+      sorter: (a, b) => a.datesContacted.localeCompare(b.datesContacted),
+    },
+    {
+      title: "Notes",
+      dataIndex: "notes",
+    },
+  ];
   return (
     <div>
       <h4
@@ -56,19 +81,12 @@ const StudentEntries = ({ onShowEntries, student }) => {
       <h3>
         {student.firstName + " " + student.lastName + " " + student.grade}{" "}
       </h3>
-      <Table responsive hover>
-        <thead>
-          <tr>
-            <th>Contacted</th>
-            <th>Date Contacted</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody>{entries.map(renderEntries)}</tbody>
-      </Table>
-      <Button onClick={() => setShowEntryForm(!showEntryForm)}>
-        Add New Entry
-      </Button>
+      {loading ? <Spinner /> : <Table dataSource={entries} columns={columns} />}
+      {!showEntryForm && (
+        <Button onClick={() => setShowEntryForm(!showEntryForm)}>
+          Add New Entry
+        </Button>
+      )}
       {showEntryForm && (
         <EntryForm
           {...student}

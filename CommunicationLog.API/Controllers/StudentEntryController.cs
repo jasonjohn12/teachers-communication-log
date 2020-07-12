@@ -53,7 +53,7 @@ namespace CommunicationLog.API.Controllers
             };
 
             StudentEntryDataStore.Current.Entries.Add(createdEntry);
-            return StatusCode(201);
+            return StatusCode(201, createdEntry);
         }
 
         [HttpDelete("entry/{entryId}")]
