@@ -1,18 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import axios from "axios";
 import { Button, Table, Spinner } from "react-bootstrap";
 import { StudentsDataContext } from "./contexts/StudentsDataContext";
 import StudentInput from "./StudentInput";
 
-const StudentDashboard = ({ onShowEntries }) => {
-  const { studentsData, loading } = useContext(StudentsDataContext);
-  console.log("studentDaata", studentsData);
+const StudentDashboard = ({ onShowEntries, studentsData, isLoading }) => {
   const [showForm, setShowForm] = useState(false);
+  // const [studentsData, setStudentsData] = useState([]);
+
   const onCloseForm = () => setShowForm(false);
 
   const renderStudents = (student, index) => (
     <tr
       key={index}
-      onClick={() => onShowEntries(student)}
+      onClick={() => {
+        onShowEntries(student);
+      }}
       style={{
         cursor: "pointer",
         backgroundColor: student.grade < 59.5 ? "rgba(247, 27, 27, 0.15)" : "",
@@ -20,6 +23,11 @@ const StudentDashboard = ({ onShowEntries }) => {
     >
       <td>{student.firstName}</td>
       <td>{student.grade}</td>
+      <td>
+        {student.entries.filter((x) => x.contacted === true).length > 0
+          ? "Contacted"
+          : "No Contact"}
+      </td>
     </tr>
   );
 
@@ -27,7 +35,8 @@ const StudentDashboard = ({ onShowEntries }) => {
     <>
       <h3>Dashboard</h3>
       <h6>You have {studentsData.length} students</h6>
-      {loading ? (
+
+      {isLoading ? (
         <Spinner animation="border" />
       ) : (
         <Table responsive hover>
@@ -35,6 +44,7 @@ const StudentDashboard = ({ onShowEntries }) => {
             <tr>
               <th>Name</th>
               <th>Grade</th>
+              <th>Parent Contacted</th>
             </tr>
           </thead>
           <tbody>{studentsData.map(renderStudents)}</tbody>
@@ -44,7 +54,7 @@ const StudentDashboard = ({ onShowEntries }) => {
         <Button onClick={() => setShowForm(!showForm)}>Add Student</Button>
       )}
 
-      {showForm && !loading && <StudentInput closeForm={onCloseForm} />}
+      {showForm && <StudentInput closeForm={onCloseForm} />}
     </>
   );
 };

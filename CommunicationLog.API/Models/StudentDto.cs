@@ -15,14 +15,8 @@ namespace CommunicationLog.API.Models
         public string LastName { get; set; }
         [Required]
         public decimal Grade { get; set; }
-        //public int NumberOfNotes { get; set; }
-        //public int NumberOfStudentsEntry
-        //{
-        //    get
-        //    {
-        //        return StudentsEntry.Count;
-        //    }
-        //}
-       // public ICollection<StudentsEntryDto> StudentsEntry { get; set; } = new List<StudentsEntryDto>();
+
+        //public ICollection<StudentsEntryDto> Entries { get; set; } = new List<StudentsEntryDto>();
+       
     }
 }

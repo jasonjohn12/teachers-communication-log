@@ -14,9 +14,9 @@ const StudentsDataContextProvider = (props) => {
   const [studentsData, setStudentsData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    getStudentsContext();
-  }, []);
+  // useEffect(() => {
+  //   getStudentsContext();
+  // }, []);
 
   const getStudentsContext = async () => {
     const result = await getStudents();

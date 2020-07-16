@@ -1,30 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { createNewEntry } from "../api/entries";
+import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import moment from "moment";
 import { getEntriesByStudentId } from "../api/entries";
 import { Button, Spinner } from "react-bootstrap";
 import EntryForm from "./EntryForm";
-import "antd/dist/antd.css";
-import { Table } from "antd";
+import BootstrapTable from "react-bootstrap-table-next";
 
-const StudentEntries = ({ onShowEntries, student }) => {
+import cellEditFactory from "react-bootstrap-table2-editor";
+
+//import "antd/dist/antd.css";
+//import { Table } from "antd";
+
+const StudentEntries = ({ onShowEntries, student, studentsData }) => {
   const [entries, setEntries] = useState([]);
   const [showEntryForm, setShowEntryForm] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getEntriesByStudentId(student.studentId).then((res) =>
-      setEntries(
-        res.data.map((row) => ({
-          studentId: row.studentId,
-          contacted: row.contacted ? "Yes" : "No",
-          datesContacted: moment(row.datesContacted).format("MM/DD/YYYY"),
-          notes: row.notes,
-          key: row.entryId,
-          entryId: row.entryId,
-        }))
-      )
+    console.log("student", student);
+    console.log("entries", entries);
+    // console.log("entires", studentsData);
+    // getEntriesByStudentId(student.studentId).then((res) =>
+    setEntries(
+      student.entries.map((row) => ({
+        keyField: row.entryId,
+        studentId: row.studentId,
+        contacted: row.contacted ? "Yes" : "No",
+        datesContacted: moment(row.datesContacted).format("MM/DD/YYYY"),
+        notes: row.notes,
+        // entryId: row.entryId,
+      }))
     );
+    //  );
     setLoading(false);
   }, []);
 
@@ -56,18 +64,29 @@ const StudentEntries = ({ onShowEntries, student }) => {
   const onCloseEntryForm = () => setShowEntryForm(false);
 
   const columns = [
+    // {
+    //   dataField: "entryId",
+    //   text: "Product ID",
+    // },
     {
-      title: "Parent Contacted",
-      dataIndex: "contacted",
+      text: "Parent Contacted",
+      dataField: "contacted",
+      //key:
+    },
+    //   {
+    // text: "Date Entered",
+    //  dataField: "datesContacted",
+    //  key: "entryId",
+    //    sort: true,
+    //  },
+    {
+      text: "Date(s) of Contact",
+      dataField: "datesContacted",
+      key: "entryId",
     },
     {
-      title: "Date Entered",
-      dataIndex: "datesContacted",
-      sorter: (a, b) => a.datesContacted.localeCompare(b.datesContacted),
-    },
-    {
-      title: "Notes",
-      dataIndex: "notes",
+      text: "Notes",
+      dataField: "notes",
     },
   ];
   return (
@@ -81,7 +100,27 @@ const StudentEntries = ({ onShowEntries, student }) => {
       <h3>
         {student.firstName + " " + student.lastName + " " + student.grade}{" "}
       </h3>
-      {loading ? <Spinner /> : <Table dataSource={entries} columns={columns} />}
+      {loading ? (
+        <Spinner />
+      ) : (
+        <BootstrapTable
+          keyField="keyField"
+          data={entries}
+          columns={columns}
+          cellEdit={cellEditFactory({
+            mode: "click",
+            onStartEdit: (row, column, rowIndex, columnIndex) => {
+              console.log("start to edit!!!");
+            },
+            beforeSaveCell: (oldValue, newValue, row, column) => {
+              console.log("Before Saving Cell!!");
+            },
+            afterSaveCell: (oldValue, newValue, row, column) => {
+              console.log("After Saving Cell!!");
+            },
+          })}
+        />
+      )}
       {!showEntryForm && (
         <Button onClick={() => setShowEntryForm(!showEntryForm)}>
           Add New Entry

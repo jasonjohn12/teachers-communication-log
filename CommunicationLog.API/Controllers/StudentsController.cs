@@ -15,10 +15,17 @@ namespace CommunicationLog.API.Controllers
         [HttpGet]
         public IActionResult GetStudents()
         {
+           // var students = StudentsDataStore.Current.Students;
+           // var tets = students.
             return Ok(StudentsDataStore.Current.Students);
         }
-       
-       [HttpGet("{id}")]
+
+        [HttpGet("entries")]
+        public IActionResult GetStudentsWithEntries()
+        {
+            return Ok(StudentsDataStore.Current.Students);
+        }
+        [HttpGet("{id}")]
         public IActionResult GetStudentById(int id)
         {
             var studentToReturn = StudentsDataStore.Current.Students.FirstOrDefault(s => s.StudentId == id);
