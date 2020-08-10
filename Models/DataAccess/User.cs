@@ -1,4 +1,4 @@
-namespace CommunicationLog.API.Models
+namespace Models.DataAccess
 {
     public class User
     {

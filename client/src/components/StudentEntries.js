@@ -26,7 +26,7 @@ const StudentEntries = ({ onShowEntries, student, studentsData }) => {
       student.entries.map((row) => ({
         keyField: row.entryId,
         studentId: row.studentId,
-        contacted: row.contacted ? "Yes" : "No",
+        contacted: row.contacted ? "<Checkmark>" : "<No Checkmark>",
         datesContacted: moment(row.datesContacted).format("MM/DD/YYYY"),
         notes: row.notes,
         // entryId: row.entryId,
@@ -49,7 +49,7 @@ const StudentEntries = ({ onShowEntries, student, studentsData }) => {
       setLoading(false);
       if (response.status === 201) {
         const returnEntry = {
-          contacted: response.data.contacted ? "Yes" : "No",
+          contacted: response.data.contacted ? "<Checkmark>" : "<No Checkmark>",
           datesContacted: moment(response.data.datesContacted).format(
             "MM/DD/YYYY"
           ),

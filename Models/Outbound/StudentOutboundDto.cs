@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Models.DataAccess;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CommunicationLog.API.Models
+namespace Models.Outbound
 {
-    public class StudentDto
+    public class StudentOutboundDto
     {
         public int StudentId { get; set; }
         [Required]
@@ -16,7 +17,7 @@ namespace CommunicationLog.API.Models
         [Required]
         public decimal Grade { get; set; }
 
-        //public ICollection<StudentsEntryDto> Entries { get; set; } = new List<StudentsEntryDto>();
-       
+        public ICollection<EntryDto> Entries { get; set; } = new List<EntryDto>();
+
     }
 }

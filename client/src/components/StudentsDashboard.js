@@ -3,12 +3,26 @@ import axios from "axios";
 import { Button, Table, Spinner } from "react-bootstrap";
 import { StudentsDataContext } from "./contexts/StudentsDataContext";
 import StudentInput from "./StudentInput";
+import StudentEntries from "./StudentEntries";
+import moment from "moment";
 
 const StudentDashboard = ({ onShowEntries, studentsData, isLoading }) => {
   const [showForm, setShowForm] = useState(false);
-  // const [studentsData, setStudentsData] = useState([]);
 
   const onCloseForm = () => setShowForm(false);
+
+  const checkRecentDate = (student) => {
+    var dates = [];
+    console.log("student", student);
+
+    student.entries.forEach((element) => {
+      if (element.contacted === true) {
+        dates.push(moment(element.datesContacted).format("MM/DD/YYYY"));
+      }
+    });
+
+    return dates.join(", ");
+  };
 
   const renderStudents = (student, index) => (
     <tr
@@ -23,11 +37,7 @@ const StudentDashboard = ({ onShowEntries, studentsData, isLoading }) => {
     >
       <td>{student.firstName}</td>
       <td>{student.grade}</td>
-      <td>
-        {student.entries.filter((x) => x.contacted === true).length > 0
-          ? "Contacted"
-          : "No Contact"}
-      </td>
+      <td>{checkRecentDate(student)}</td>
     </tr>
   );
 
@@ -58,4 +68,4 @@ const StudentDashboard = ({ onShowEntries, studentsData, isLoading }) => {
     </>
   );
 };
-export default StudentDashboard;
+export default React.memo(StudentDashboard);

@@ -10,7 +10,6 @@ import {
 export const StudentsDataContext = createContext();
 
 const StudentsDataContextProvider = (props) => {
-  console.log("studentContextRender");
   const [studentsData, setStudentsData] = useState([]);
   const [loading, setLoading] = useState(false);
 

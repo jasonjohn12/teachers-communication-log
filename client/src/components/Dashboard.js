@@ -10,12 +10,12 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [studentsData, setStudentsData] = useState([]);
   const [student, setStudent] = useState({});
+  console.log("Render DASHBOARD");
 
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
       const result = await getStudents();
-      console.log("asfa", result);
       setStudentsData(result.data);
       setLoading(false);
     };
@@ -46,4 +46,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default React.memo(Dashboard);
