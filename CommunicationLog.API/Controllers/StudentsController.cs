@@ -1,5 +1,7 @@
 ﻿using CommunicationLog.API.Models;
+using Manager;
 using Microsoft.AspNetCore.Mvc;
+using Models.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,22 +14,32 @@ namespace CommunicationLog.API.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
+        private readonly ICommunicationLogManager _communicationLogManager;
+        public StudentsController(ICommunicationLogManager communicationLogManager)
+        {
+            _communicationLogManager = communicationLogManager;
+        }
+
         [HttpGet]
         public IActionResult GetStudents()
         {
-            return Ok(StudentsDataStore.Current.Students);
+            var students = _communicationLogManager.GetAllStudents();
+            return Ok(students);
+ 
         }
-       
-       [HttpGet("{id}")]
+
+        //[HttpGet("entries")]
+        //public IActionResult GetStudentsWithEntries()
+        //{
+        //    return Ok(StudentsDataStore.Current.Students);
+        //}
+        [HttpGet("{id}")]
         public IActionResult GetStudentById(int id)
         {
-            var studentToReturn = StudentsDataStore.Current.Students.FirstOrDefault(s => s.StudentId == id);
+            var student = _communicationLogManager.GetStudentById(id);
 
-            if (studentToReturn == null)
-            {
-                return NotFound();
-            }
-            return Ok(studentToReturn);
+            if (student == null) return NotFound();
+            return Ok(student);
         }
 
         [HttpPost]
@@ -37,31 +49,14 @@ namespace CommunicationLog.API.Controllers
             {
                 return BadRequest();
             }
-            var guid = Guid.NewGuid();
-            Random rnd = new Random();
-       
-            int id = rnd.Next(52);
-            var createdStudent = new StudentDto()
-            {
-                StudentId = id,
-                FirstName = student.FirstName,
-                LastName = student.LastName,
-                Grade = student.Grade
-            };
-            StudentsDataStore.Current.Students.Add(createdStudent);
-           return StatusCode(201, createdStudent);
+            var studentToCreate = _communicationLogManager.StudentToCreate(student);
+            return StatusCode(201, studentToCreate);
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteStudent(int id)
         {
-            var student = StudentsDataStore.Current.Students.Find(x => x.StudentId == id);
-            if(student == null)
-            {
-                return NotFound();
-            };
-
-            StudentsDataStore.Current.Students.Remove(student);
+            _communicationLogManager.DeleteStudentById(id);
             return StatusCode(204);
         }
     }

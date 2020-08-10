@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using CommunicationLog.API.Models;
+using Models.DataAccess;
 
 namespace CommunicationLog.API.Data
 {

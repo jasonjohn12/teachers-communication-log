@@ -1,20 +1,19 @@
-﻿using CommunicationLog.API.Models;
+﻿using Models.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace CommunicationLog.API
+namespace DataAccessLayer
 {
-    public class StudentEntryDataStore
+    public class StudentEntriesDataStore
     {
-        public static StudentEntryDataStore Current { get; } = new StudentEntryDataStore();
-        public List<StudentsEntryDto> Entries { get; set; }
-        public StudentEntryDataStore()
+        public static StudentEntriesDataStore Current { get; } = new StudentEntriesDataStore();
+        public List<EntryDto> Entries { get; set; }
+        public StudentEntriesDataStore()
         {
-            Entries = new List<StudentsEntryDto>()
+            Entries = new List<EntryDto>()
             {
-                new StudentsEntryDto()
+                new EntryDto()
                 {
                     StudentId = 1,
                     EntryId = 1,
@@ -22,7 +21,7 @@ namespace CommunicationLog.API
                     DatesContacted = DateTime.Now, //DateTime.Now.ToString(),
                     Notes = "Did not answer. Left message"
                 },
-                new StudentsEntryDto()
+                new EntryDto()
                 {
                      StudentId = 1,
                      EntryId = 2,
@@ -30,7 +29,7 @@ namespace CommunicationLog.API
                      DatesContacted = DateTime.Now.AddDays(1), //DateTime.Now.ToString(),
                      Notes = "Spoke to Parents. Will make sure Jason will turn in his assignments"
                 },
-                new StudentsEntryDto()
+                new EntryDto()
                 {
                      StudentId = 2,
                      EntryId = 3,
@@ -42,4 +41,3 @@ namespace CommunicationLog.API
         }
     }
 }
-

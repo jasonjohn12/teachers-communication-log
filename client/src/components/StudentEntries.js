@@ -1,50 +1,94 @@
 import React, { useEffect, useState } from "react";
+import { createNewEntry } from "../api/entries";
+import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import moment from "moment";
 import { getEntriesByStudentId } from "../api/entries";
-import { Button, Table } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import EntryForm from "./EntryForm";
+import BootstrapTable from "react-bootstrap-table-next";
 
-const StudentEntries = ({ onShowEntries, student }) => {
+import cellEditFactory from "react-bootstrap-table2-editor";
+
+//import "antd/dist/antd.css";
+//import { Table } from "antd";
+
+const StudentEntries = ({ onShowEntries, student, studentsData }) => {
   const [entries, setEntries] = useState([]);
   const [showEntryForm, setShowEntryForm] = useState(false);
-  useEffect(() => {
-    getEntriesByStudentId(student.studentId).then((entry) =>
-      setEntries(entry.data)
-    );
-  }, [student.studentId]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getEntriesByStudentId(student.studentId).then((entry) =>
-      setEntries(entry.data)
+    console.log("student", student);
+    console.log("entries", entries);
+    // console.log("entires", studentsData);
+    // getEntriesByStudentId(student.studentId).then((res) =>
+    setEntries(
+      student.entries.map((row) => ({
+        keyField: row.entryId,
+        studentId: row.studentId,
+        contacted: row.contacted ? "<Checkmark>" : "<No Checkmark>",
+        datesContacted: moment(row.datesContacted).format("MM/DD/YYYY"),
+        notes: row.notes,
+        // entryId: row.entryId,
+      }))
     );
-  }, [entries]);
+    //  );
+    setLoading(false);
+  }, []);
 
   const onAddNewEntry = (studentId, notes, contacted) => {
+    setLoading(true);
     console.log(studentId, notes, contacted);
     const entry = {
       studentId,
+      datesContacted: new Date(),
       notes,
       contacted,
     };
+    createNewEntry(entry, studentId).then((response) => {
+      setLoading(false);
+      if (response.status === 201) {
+        const returnEntry = {
+          contacted: response.data.contacted ? "<Checkmark>" : "<No Checkmark>",
+          datesContacted: moment(response.data.datesContacted).format(
+            "MM/DD/YYYY"
+          ),
+          notes: response.data.notes,
+        };
+        setEntries([...entries, returnEntry]);
+      }
+    });
     setEntries([...entries, entry]);
   };
 
   const onCloseEntryForm = () => setShowEntryForm(false);
 
-  const renderEntries = (entry, index) => (
-    <tr
-      key={index}
-      onClick={() => onShowEntries(student)}
-      style={{
-        cursor: "pointer",
-      }}
-    >
-      <td>{entry.contacted.toString()}</td>
-      <td>{moment(entry.datesContacted).format("MM/DD/YYYY")}</td>
-
-      <td>{entry.notes}</td>
-    </tr>
-  );
+  const columns = [
+    // {
+    //   dataField: "entryId",
+    //   text: "Product ID",
+    // },
+    {
+      text: "Parent Contacted",
+      dataField: "contacted",
+      //key:
+    },
+    //   {
+    // text: "Date Entered",
+    //  dataField: "datesContacted",
+    //  key: "entryId",
+    //    sort: true,
+    //  },
+    {
+      text: "Date(s) of Contact",
+      dataField: "datesContacted",
+      key: "entryId",
+    },
+    {
+      text: "Notes",
+      dataField: "notes",
+    },
+  ];
   return (
     <div>
       <h4
@@ -56,19 +100,32 @@ const StudentEntries = ({ onShowEntries, student }) => {
       <h3>
         {student.firstName + " " + student.lastName + " " + student.grade}{" "}
       </h3>
-      <Table responsive hover>
-        <thead>
-          <tr>
-            <th>Contacted</th>
-            <th>Date Contacted</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody>{entries.map(renderEntries)}</tbody>
-      </Table>
-      <Button onClick={() => setShowEntryForm(!showEntryForm)}>
-        Add New Entry
-      </Button>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <BootstrapTable
+          keyField="keyField"
+          data={entries}
+          columns={columns}
+          cellEdit={cellEditFactory({
+            mode: "click",
+            onStartEdit: (row, column, rowIndex, columnIndex) => {
+              console.log("start to edit!!!");
+            },
+            beforeSaveCell: (oldValue, newValue, row, column) => {
+              console.log("Before Saving Cell!!");
+            },
+            afterSaveCell: (oldValue, newValue, row, column) => {
+              console.log("After Saving Cell!!");
+            },
+          })}
+        />
+      )}
+      {!showEntryForm && (
+        <Button onClick={() => setShowEntryForm(!showEntryForm)}>
+          Add New Entry
+        </Button>
+      )}
       {showEntryForm && (
         <EntryForm
           {...student}

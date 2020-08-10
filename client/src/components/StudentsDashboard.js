@@ -1,18 +1,35 @@
-import React, { useContext, useState } from "react";
-import { Button, Table } from "react-bootstrap";
+import React, { useContext, useState, useEffect } from "react";
+import axios from "axios";
+import { Button, Table, Spinner } from "react-bootstrap";
 import { StudentsDataContext } from "./contexts/StudentsDataContext";
 import StudentInput from "./StudentInput";
+import StudentEntries from "./StudentEntries";
+import moment from "moment";
 
-const StudentDashboard = ({ onShowEntries }) => {
-  const { studentsData } = useContext(StudentsDataContext);
-  console.log("studentDaata", studentsData);
+const StudentDashboard = ({ onShowEntries, studentsData, isLoading }) => {
   const [showForm, setShowForm] = useState(false);
+
   const onCloseForm = () => setShowForm(false);
+
+  const checkRecentDate = (student) => {
+    var dates = [];
+    console.log("student", student);
+
+    student.entries.forEach((element) => {
+      if (element.contacted === true) {
+        dates.push(moment(element.datesContacted).format("MM/DD/YYYY"));
+      }
+    });
+
+    return dates.join(", ");
+  };
 
   const renderStudents = (student, index) => (
     <tr
       key={index}
-      onClick={() => onShowEntries(student)}
+      onClick={() => {
+        onShowEntries(student);
+      }}
       style={{
         cursor: "pointer",
         backgroundColor: student.grade < 59.5 ? "rgba(247, 27, 27, 0.15)" : "",
@@ -20,6 +37,7 @@ const StudentDashboard = ({ onShowEntries }) => {
     >
       <td>{student.firstName}</td>
       <td>{student.grade}</td>
+      <td>{checkRecentDate(student)}</td>
     </tr>
   );
 
@@ -27,19 +45,27 @@ const StudentDashboard = ({ onShowEntries }) => {
     <>
       <h3>Dashboard</h3>
       <h6>You have {studentsData.length} students</h6>
-      <Table responsive hover>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Grade</th>
-          </tr>
-        </thead>
-        <tbody>{studentsData.map(renderStudents)}</tbody>
-      </Table>
-      <Button onClick={() => setShowForm(!showForm)}>Add Student</Button>
+
+      {isLoading ? (
+        <Spinner animation="border" />
+      ) : (
+        <Table responsive hover>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Grade</th>
+              <th>Parent Contacted</th>
+            </tr>
+          </thead>
+          <tbody>{studentsData.map(renderStudents)}</tbody>
+        </Table>
+      )}
+      {!showForm && (
+        <Button onClick={() => setShowForm(!showForm)}>Add Student</Button>
+      )}
 
       {showForm && <StudentInput closeForm={onCloseForm} />}
     </>
   );
 };
-export default StudentDashboard;
+export default React.memo(StudentDashboard);

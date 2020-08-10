@@ -1,0 +1,13 @@
+C:\Users\jason\Dev\teachers-communication-log\Manager\obj\Debug\netcoreapp3.1\Manager.csprojAssemblyReference.cache
+C:\Users\jason\Dev\teachers-communication-log\Manager\obj\Debug\netcoreapp3.1\Manager.AssemblyInfoInputs.cache
+C:\Users\jason\Dev\teachers-communication-log\Manager\obj\Debug\netcoreapp3.1\Manager.AssemblyInfo.cs
+C:\Users\jason\Dev\teachers-communication-log\Manager\bin\Debug\netcoreapp3.1\Manager.deps.json
+C:\Users\jason\Dev\teachers-communication-log\Manager\bin\Debug\netcoreapp3.1\Manager.dll
+C:\Users\jason\Dev\teachers-communication-log\Manager\bin\Debug\netcoreapp3.1\Manager.pdb
+C:\Users\jason\Dev\teachers-communication-log\Manager\bin\Debug\netcoreapp3.1\DataAccessLayer.dll
+C:\Users\jason\Dev\teachers-communication-log\Manager\bin\Debug\netcoreapp3.1\Models.dll
+C:\Users\jason\Dev\teachers-communication-log\Manager\bin\Debug\netcoreapp3.1\DataAccessLayer.pdb
+C:\Users\jason\Dev\teachers-communication-log\Manager\bin\Debug\netcoreapp3.1\Models.pdb
+C:\Users\jason\Dev\teachers-communication-log\Manager\obj\Debug\netcoreapp3.1\Manager.csproj.CopyComplete
+C:\Users\jason\Dev\teachers-communication-log\Manager\obj\Debug\netcoreapp3.1\Manager.dll
+C:\Users\jason\Dev\teachers-communication-log\Manager\obj\Debug\netcoreapp3.1\Manager.pdb

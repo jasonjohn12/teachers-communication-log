@@ -1,5 +1,8 @@
 ﻿using CommunicationLog.API.Models;
+using DataAccessLayer;
+using Manager;
 using Microsoft.AspNetCore.Mvc;
+using Models.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +14,27 @@ namespace CommunicationLog.API.Controllers
     [Route("api/[controller]")]
     public class StudentEntryController : ControllerBase
     {
-        [HttpGet("students/{studentId}")]
-        public IActionResult GetStudentEntries(int studentId)
+        private readonly ICommunicationLogManager _communicationLogManager;
+
+        public StudentEntryController(ICommunicationLogManager communicationLogManager)
         {
-            var entries = StudentEntryDataStore.Current.Entries.FindAll(s => s.StudentId == studentId);
+            _communicationLogManager = communicationLogManager;
+        }
+        [HttpGet()]
+        public IActionResult GetAllEntries()
+        {
+            var entries = _communicationLogManager.GetAllEntries();
+
+           if (entries == null)
+            {
+                return NotFound();
+            }
+            return Ok(entries);
+        }
+        [HttpGet("students/{studentId}")]
+        public IActionResult GetStudentEntriesByStudentId(int studentId)
+        {
+            var entries = StudentEntriesDataStore.Current.Entries.FindAll(s => s.StudentId == studentId);
             if (entries == null)
             {
                 return NotFound();
@@ -24,7 +44,7 @@ namespace CommunicationLog.API.Controllers
         [HttpGet("entry/{entryId}")]
         public IActionResult GetEntryById(int entryId)
         {
-            var entry = StudentEntryDataStore.Current.Entries.Find(x => x.EntryId == entryId);
+            var entry = StudentEntriesDataStore.Current.Entries.Find(x => x.EntryId == entryId);
             if (entry == null)
             {
                 return NotFound();
@@ -32,40 +52,40 @@ namespace CommunicationLog.API.Controllers
 
             return Ok(entry);
         }
-        [HttpPost("entry/{studentId}")]
-        public IActionResult AddEntry(StudentsEntryDto entryDto, int studentId)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-            Random rnd = new Random();
+        //[HttpPost("entry/{studentId}")]
+        //public IActionResult AddEntry(EntryDto entryDto, int studentId)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    Random rnd = new Random();
 
-            int id = rnd.Next(52);
+        //    int id = rnd.Next(52);
 
-            var createdEntry = new StudentsEntryDto()
-            {
-                EntryId = id,
-                StudentId = studentId,
-                Contacted = entryDto.Contacted,
-                DatesContacted = DateTime.Now,
-                Notes = entryDto.Notes
-            };
+        //    var createdEntry = new EntryDto()
+        //    {
+        //        EntryId = id,
+        //        StudentId = studentId,
+        //        Contacted = entryDto.Contacted,
+        //        DatesContacted = DateTime.Now,
+        //        Notes = entryDto.Notes
+        //    };
 
-            StudentEntryDataStore.Current.Entries.Add(createdEntry);
-            return StatusCode(201);
-        }
+        //    StudentEntryDataStore.Current.Entries.Add(createdEntry);
+        //    return StatusCode(201, createdEntry);
+        //}
 
         [HttpDelete("entry/{entryId}")]
         public IActionResult DeleteEntry(int entryId)
         {
-            var entryToDelete = StudentEntryDataStore.Current.Entries.Find(x => x.EntryId == entryId);
+            var entryToDelete = StudentEntriesDataStore.Current.Entries.Find(x => x.EntryId == entryId);
             if (entryToDelete == null)
             {
                 return NotFound();
             }
 
-            StudentEntryDataStore.Current.Entries.Remove(entryToDelete);
+            StudentEntriesDataStore.Current.Entries.Remove(entryToDelete);
 
             return StatusCode(204);
         }
