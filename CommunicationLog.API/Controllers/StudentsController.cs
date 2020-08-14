@@ -28,17 +28,16 @@ namespace CommunicationLog.API.Controllers
  
         }
 
-        //[HttpGet("entries")]
-        //public IActionResult GetStudentsWithEntries()
-        //{
-        //    return Ok(StudentsDataStore.Current.Students);
-        //}
         [HttpGet("{id}")]
         public IActionResult GetStudentById(int id)
         {
+            if(id <= 0)
+            {
+                return NotFound();
+            }
             var student = _communicationLogManager.GetStudentById(id);
 
-            if (student == null) return NotFound();
+            if (student.StudentId == 0) return NotFound();
             return Ok(student);
         }
 

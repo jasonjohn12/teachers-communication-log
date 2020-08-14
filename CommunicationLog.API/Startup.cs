@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunicationLog.API.Data;
+using DataAccessLayer;
 using Manager;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +33,7 @@ namespace CommunicationLog.API
             //services.AddSingleton<ICommunicationLogManager, CommunicationLogManager>();
             services.AddSingleton<ICommunicationLogManager, CommunicationLogManager>();
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddTransient<ICommunicationLogDataAccess, CommunicationLogDataAccess>();
             //  services.AddScoped<ICommunicationLogManger, CommunicationLog>();
         }
 

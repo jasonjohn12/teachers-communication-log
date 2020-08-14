@@ -52,7 +52,13 @@ const StudentInput = ({ closeForm }) => {
               onChange={(e) => setGrade(e.target.value)}
             />
           </Col>
-          <Button type="submit">Submit</Button>
+          <Button
+            type="submit"
+            disabled={submit}
+            style={{ cursor: "not-allowed" }}
+          >
+            Submit
+          </Button>
           <Button
             style={{ marginLeft: "5px" }}
             variant="danger"
