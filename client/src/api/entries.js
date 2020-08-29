@@ -6,7 +6,6 @@ export function getEntriesByStudentId(studentId) {
 }
 
 export function createNewEntry(entry) {
-  console.log("entry", entry);
   var studentId = entry.studentId;
   return axios.post(
     `http://localhost:5000/api/studentEntry/entry/${studentId}`,

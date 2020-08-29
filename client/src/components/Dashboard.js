@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { getStudents } from "../api/students";
 import StudentDashboard from "./StudentsDashboard";
 import StudentEntries from "./StudentEntries";
@@ -10,7 +9,6 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [studentsData, setStudentsData] = useState([]);
   const [student, setStudent] = useState({});
-  console.log("Render DASHBOARD");
 
   useEffect(() => {
     setLoading(true);

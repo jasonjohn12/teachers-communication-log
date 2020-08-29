@@ -1,9 +1,13 @@
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using CommunicationLog.API.Data;
 using CommunicationLog.API.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CommunicationLog.API.Controllers
 {
@@ -35,8 +39,28 @@ namespace CommunicationLog.API.Controllers
             };
             var userFromRepo = await _repo.Login(userforLogin.Username.ToLower(), userforLogin.Password);
 
-    
-            return Ok(userFromRepo);
+        var claims = new[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
+            new Claim(ClaimTypes.Name, userFromRepo.UserName), 
+        };
+
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SUPERSECRETSTUFF"));
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(claims),
+            Expires = DateTime.UtcNow.AddHours(1),
+            SigningCredentials = credentials
+        };
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+            return Ok(new{
+                token = tokenHandler.WriteToken(token),
+                user = userFromRepo
+            });
         }
 
          [HttpPost("Register")]

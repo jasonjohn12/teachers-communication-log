@@ -1,9 +1,6 @@
-import React, { useContext, useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { Button, Table, Spinner } from "react-bootstrap";
-import { StudentsDataContext } from "./contexts/StudentsDataContext";
 import StudentInput from "./StudentInput";
-import StudentEntries from "./StudentEntries";
 import moment from "moment";
 
 const StudentDashboard = ({ onShowEntries, studentsData, isLoading }) => {
@@ -13,8 +10,6 @@ const StudentDashboard = ({ onShowEntries, studentsData, isLoading }) => {
 
   const checkRecentDate = (student) => {
     var dates = [];
-    console.log("student", student);
-
     student.entries.forEach((element) => {
       if (element.contacted === true) {
         dates.push(moment(element.datesContacted).format("MM/DD/YYYY"));
