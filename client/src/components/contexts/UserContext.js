@@ -5,13 +5,11 @@ export const UserContext = createContext();
 // have loading spinner
 // create a login page
 const UserContextProvider = (props) => {
-  console.log("user Context");
   const [user, setUser] = useState(null);
 
   const loginContext = async (userName, password) => {
     const result = await login(userName, password);
-
-    setUser(result.data);
+    setUser(result.data.user);
   };
 
   const logout = () => {

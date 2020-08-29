@@ -13,17 +13,17 @@ const Navigation = ({ user, onLogOut, onLogin }) => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    console.log("submittingFOrm");
     if (userName  && password ) {
       onLogin(userName, password);
     }
   };
+  // const {user} = user;
   return (
     <>
       <Navbar bg="dark" variant="dark">
         <Navbar.Brand href="#home">Sinking Pirates</Navbar.Brand>
         <Nav className="mr-auto"></Nav>
-
+     
         {user ? (
           <Button
             id="logoutButton"
