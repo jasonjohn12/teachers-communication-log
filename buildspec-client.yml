@@ -19,10 +19,10 @@ phases:
     #   - command
   build:
     # run-as: root
-
     commands:
       - cd ./client
       - npm run ci:start-server
+      - npm run build
     finally:
       - echo Build Phase completed
   post_build:
