@@ -9,7 +9,7 @@ const UserContextProvider = (props) => {
 
   const loginContext = async (userName, password) => {
     const result = await login(userName, password);
-    setUser(result.data.user);
+    setUser(result.data);
   };
 
   const logout = () => {
